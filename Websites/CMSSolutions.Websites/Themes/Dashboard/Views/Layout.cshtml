@@ -75,20 +75,20 @@
                 <div class="menu-body">
                     <span class="label"></span>
                     <span class="menu-selector">
-                        <a href="@Url.Content("~/")"><i class="fa fa-home"></i> Trang chủ</a>
+                        <a href="@Url.Content("~/")"><i class="fa fa-home"></i> Home Page</a>
                     </span>
                 </div>
                 
                 <div id="project-context" class="">
                     <span class="label"></span>
                     <span data-toggle="dropdown" class="popover-trigger-element dropdown-toggle menu-selector" id="project-selector">
-                        <i class="fa fa-cog"></i> Cài đặt <i class="fa fa-angle-down"></i>
+                        <i class="fa fa-cog"></i> Settings <i class="fa fa-angle-down"></i>
                     </span>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="@Url.Action("ChangePassword", "Account", new { area = Constants.Areas.Accounts })">Đổi mật khẩu</a>
+                            <a href="@Url.Action("ChangePassword", "Account", new { area = Constants.Areas.Accounts })">Change Password</a>
                         </li>
-                        <li>
+                        @*<li>
                             <a href="@Url.Action("Index", "Language", new { area = Constants.Areas.Localization })">Ngôn ngữ</a>
                         </li>
                         <li>
@@ -97,29 +97,29 @@
                         <li class="divider"></li>
                         <li>
                             <a href="@Url.Action("ResetCache", "Admin", new { area = AdminPermissions.ManagerAdmin })"><i class="fa fa-refresh"></i> Clear Cache</a>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
 
-                <div class="pull-right">
-                    <div id="hide-menu" class="btn-header pull-right">
-                        <span> <a href="javascript:void(0);" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
-                    </div>
+                <div class="pull-right">                    
                     <div id="logout" class="btn-header transparent pull-right">
                         <span>
                             <a href="@Url.Action("LogOff", "Account", new { area = Constants.Areas.Accounts })" title="Sign Out"><i class="fa fa-sign-out"></i></a>
                         </span>
                     </div>
-                    <div id="search-mobile" class="btn-header transparent pull-right">
+					<div id="hide-menu" class="btn-header pull-right">
+						<span> <a href="javascript:void(0);" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+					</div>
+                    @*<div id="search-mobile" class="btn-header transparent pull-right">
                         <span>
                             <a href="javascript:void(0)" title="Search"><i class="fa fa-search"></i></a> 
                         </span>
-                    </div>
-                    <div class="btn-header transparent pull-right">
+                    </div>*@
+                    @*<div class="btn-header transparent pull-right">
                         <span>
                             <a href="@Url.Action("ResetCache", "Admin", new { area = AdminPermissions.ManagerAdmin })" title="Reset Cache"><i class="fa fa-refresh"></i></a>
                         </span>
-                    </div>
+                    </div>*@
 
                     @*<ul class="header-dropdown-list hidden-xs">
                         <li>  

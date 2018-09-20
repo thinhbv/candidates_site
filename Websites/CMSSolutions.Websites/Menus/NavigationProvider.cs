@@ -32,15 +32,15 @@ namespace CMSSolutions.Websites.Menus
 		{
 			builder.IconCssClass("fa-th");
 
-			builder.Add(T("Languages"), "2", b => b
+			builder.Add(T("Languages"), "0", b => b
 				.Action("Index", "Languages", new { area = "" })
 				.Permission(LanguagesPermissions.ManagerLanguages));
 
-			builder.Add(T("Positions"), "4", b => b
+			builder.Add(T("Positions"), "1", b => b
 				.Action("Index", "Positions", new { area = "" })
 				.Permission(PositionsPermissions.ManagerPositions));
 
-			builder.Add(T("Phonebook"), "5", b => b
+			builder.Add(T("Stakeholder"), "2", b => b
 				.Action("Index", "Stakeholder", new { area = "" })
 				.Permission(StakeholderPermissions.ManagerStakeholder));
 		}
@@ -48,8 +48,6 @@ namespace CMSSolutions.Websites.Menus
 		private void BuildRecruitment(NavigationItemBuilder builder)
 		{
 			builder.IconCssClass("fa-building");
-
-			//builder.Add(T("LevelCandidates Management"), "3", b => b.Action("Index", "LevelCandidates", new { area = "" }).IconCssClass("fa-circle").Permission(LevelCandidatesPermissions.ManagerLevelCandidates));
 
 			builder.Add(T("Candidate List"), "0", b => b
 				.Action("Index", "Candidates", new { area = "" })
@@ -68,9 +66,9 @@ namespace CMSSolutions.Websites.Menus
 				.Action("Index", "Candidates", new { area = "" })
 				.Permission(CandidatesPermissions.ManagerCandidates));
 
-			//builder.Add(T("Interview Report"), "0", b => b
-			//	.Action("Index", "Candidates", new { area = "" })
-			//	.Permission(CandidatesPermissions.ManagerCandidates));
+			builder.Add(T("Summary Report"), "0", b => b
+				.Action("Index", "Candidates", new { area = "" })
+				.Permission(CandidatesPermissions.ManagerCandidates));
 		}
     }
 }

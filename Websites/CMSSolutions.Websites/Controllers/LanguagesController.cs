@@ -30,8 +30,8 @@ namespace CMSSolutions.Websites.Controllers
             this.service = service;
             this.TableName = "tblLanguages";
         }
-        
-        [Url("admin/languages")]
+
+		[Url("admin/language-develop")]
         public ActionResult Index()
         {
             WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Languages"), Url = "#" });
@@ -66,8 +66,8 @@ namespace CMSSolutions.Websites.Controllers
             var result = new ControlGridAjaxData<Languages>(items, totals);
             return result;
         }
-        
-        [Url("admin/languages/edit/{id}")]
+
+		[Url("admin/language-develop/edit/{id}")]
         public ActionResult Edit(int id)
         {
             WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Languages"), Url = "#" });
@@ -93,7 +93,7 @@ namespace CMSSolutions.Websites.Controllers
         [HttpPost()]
         [FormButton("Save")]
         [ValidateInput(false)]
-        [Url("admin/languages/update")]
+		[Url("admin/language-develop/update")]
         public ActionResult Update(LanguagesModel model)
         {
             if (!ModelState.IsValid)

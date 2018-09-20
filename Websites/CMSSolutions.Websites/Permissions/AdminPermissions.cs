@@ -10,7 +10,7 @@ namespace CMSSolutions.Websites.Permissions
         {
             Name = "ManagerAdmin",
             Category = "Management",
-            Description = "Bảng điều khiển"
+			Description = "Dashboard"
         };
 
         public IEnumerable<Permission> GetPermissions()

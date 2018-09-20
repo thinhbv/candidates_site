@@ -37,7 +37,8 @@ namespace CMSSolutions.Websites.Controllers
             WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Languages"), Url = "#" });
             var result = new ControlGridFormResult<Languages>();
             var siteSettings = WorkContext.Resolve<SiteSettings>();
-            result.Title = this.T("Management Languages");
+
+			result.Title = this.T("Language List");
             result.CssClass = "table table-bordered table-striped";
             result.UpdateActionName = "Update";
             result.IsAjaxSupported = true;
@@ -47,14 +48,24 @@ namespace CMSSolutions.Websites.Controllers
             result.GridWrapperStartHtml = Constants.Grid.GridWrapperStartHtml;
             result.GridWrapperEndHtml = Constants.Grid.GridWrapperEndHtml;
             result.ClientId = TableName;
-            result.AddColumn(x => x.Id);
-            result.AddColumn(x => x.name);
-            result.AddColumn(x => x.created_date);
-            result.AddColumn(x => x.updated_date);
-            result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(Constants.RowLeft).HasRow(true);
-            result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
+			result.ActionsColumnWidth = 150;
+
+			result.AddColumn(x => x.name, T("Language Name"));
+            result.AddColumn(x => x.created_date, T("Created Date"));
+
+            result.AddAction().HasText(this.T("Create"))
+				.HasUrl(this.Url.Action("Edit", new { id = 0 }))
+				.HasButtonStyle(ButtonStyle.Primary)
+				.HasBoxButton(false).HasCssClass(Constants.RowLeft)
+				.HasRow(true).ShowModalDialog();
+            result.AddRowAction().HasText(this.T("Edit"))
+				.HasUrl(x => Url.Action("Edit", new { id = x.Id }))
+				.HasButtonStyle(ButtonStyle.Default)
+				.HasButtonSize(ButtonSize.ExtraSmall)
+				.ShowModalDialog();
             result.AddRowAction(true).HasText(this.T("Delete")).HasName("Delete").HasValue(x => Convert.ToString(x.Id)).HasButtonStyle(ButtonStyle.Danger).HasButtonSize(ButtonSize.ExtraSmall).HasConfirmMessage(this.T(Constants.Messages.ConfirmDeleteRecord));
-            result.AddReloadEvent("UPDATE_ENTITY_COMPLETE");
+            
+			result.AddReloadEvent("UPDATE_ENTITY_COMPLETE");
             result.AddReloadEvent("DELETE_ENTITY_COMPLETE");
             return result;
         }
@@ -67,26 +78,30 @@ namespace CMSSolutions.Websites.Controllers
             return result;
         }
 
+		[Themed(false)]
 		[Url("admin/language-develop/edit/{id}")]
         public ActionResult Edit(int id)
         {
-            WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Languages"), Url = "#" });
-            WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Languages"), Url = Url.Action("Index") });
+			var title = T("Create Language");
             var model = new LanguagesModel();
             if (id > 0)
             {
 				 model = this.service.GetById(id);
+				 title = T("Edit Language");
             }
-            var result = new ControlFormResult<LanguagesModel>(model);
-            result.Title = this.T("Edit Languages");
-            result.FormMethod = FormMethod.Post;
-            result.UpdateActionName = "Update";
-            result.ShowCancelButton = false;
-            result.ShowBoxHeader = false;
-            result.FormWrapperStartHtml = Constants.Form.FormWrapperStartHtml;
-            result.FormWrapperEndHtml = Constants.Form.FormWrapperEndHtml;
-            result.AddAction().HasText(this.T("Clear")).HasUrl(this.Url.Action("Edit", RouteData.Values.Merge(new { id = 0 }))).HasButtonStyle(ButtonStyle.Success);
-            result.AddAction().HasText(this.T("Back")).HasUrl(this.Url.Action("Index")).HasButtonStyle(ButtonStyle.Danger);
+			
+			var result = new ControlFormResult<LanguagesModel>(model)
+			{
+				Title = title,
+				FormMethod = FormMethod.Post,
+				UpdateActionName = "Update",
+				SubmitButtonText = T("Save"),
+				CancelButtonText = T("Close"),
+				ShowBoxHeader = false,
+				FormWrapperStartHtml = Constants.Form.FormWrapperStartHtml,
+				FormWrapperEndHtml = Constants.Form.FormWrapperEndHtml
+			};
+
             return result;
         }
         
@@ -100,20 +115,25 @@ namespace CMSSolutions.Websites.Controllers
             {
 				return new AjaxResult().Alert(T(Constants.Messages.InvalidModel));
             }
+
+			var text = "Create success.";
             Languages item;
             if (model.Id == 0)
             {
                 item = new Languages();
+				item.created_date = DateTime.Now;
             }
             else
             {
                 item = service.GetById(model.Id);
+				item.updated_date = DateTime.Now;
+				text = "Update success.";
             }
+
             item.name = model.name;
-            item.created_date = model.created_date;
-            item.updated_date = model.updated_date;
             service.Save(item);
-			return new AjaxResult().NotifyMessage("UPDATE_ENTITY_COMPLETE");
+
+			return new AjaxResult().NotifyMessage("UPDATE_ENTITY_COMPLETE").Alert(text).CloseModalDialog();
         }
         
         [ActionName("Update")]
@@ -121,8 +141,17 @@ namespace CMSSolutions.Websites.Controllers
         public ActionResult Delete(int id)
         {
             var model = service.GetById(id);
-            service.Delete(model);
-			return new AjaxResult().NotifyMessage("DELETE_ENTITY_COMPLETE");
+			var levelSV = WorkContext.Resolve<ILevelCandidatesService>();
+			var total = levelSV.GetRecords(x => x.language_id == id).Count;
+			if (total <= 0)
+			{
+				service.Delete(model);
+				return new AjaxResult().NotifyMessage("DELETE_ENTITY_COMPLETE").Alert("Delete success.");
+			}
+			else
+			{
+				return new AjaxResult().NotifyMessage("DELETE_ENTITY_COMPLETE").Alert("Cannot delete because using for candidates.");
+			}
         }
     }
 }

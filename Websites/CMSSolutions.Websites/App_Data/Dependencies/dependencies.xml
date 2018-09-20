@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dependencies>
+  <Dependency>
+    <ModuleName>CMSSolutions</ModuleName>
+    <VirtualPath>~/bin/CMSSolutions.dll</VirtualPath>
+    <LoaderName>ReferencedExtensionLoader</LoaderName>
+    <References />
+  </Dependency>
+  <Dependency>
+    <ModuleName>CMSSolutions.Accounts</ModuleName>
+    <VirtualPath>~/bin/CMSSolutions.Accounts.dll</VirtualPath>
+    <LoaderName>ReferencedExtensionLoader</LoaderName>
+    <References />
+  </Dependency>
+  <Dependency>
+    <ModuleName>Dashboard</ModuleName>
+    <VirtualPath>~/Themes/Dashboard</VirtualPath>
+    <LoaderName>RawThemeExtensionLoader</LoaderName>
+    <References />
+  </Dependency>
+  <Dependency>
+    <ModuleName>Default</ModuleName>
+    <VirtualPath>~/Themes/Default</VirtualPath>
+    <LoaderName>RawThemeExtensionLoader</LoaderName>
+    <References />
+  </Dependency>
+</Dependencies>

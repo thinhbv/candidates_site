@@ -6,12 +6,11 @@ namespace CMSSolutions.Websites.Entities
     using CMSSolutions.Data;
     using CMSSolutions.Data.Entity;
     using System.Runtime.Serialization;
-    
-    
+	using System.ComponentModel.DataAnnotations.Schema;
+
     [DataContract()]
     public class Candidates : BaseEntity<int>
     {
-        
         [DataMember()]
         [DisplayName("full_name")]
         public string full_name { get; set; }
@@ -19,6 +18,10 @@ namespace CMSSolutions.Websites.Entities
         [DataMember()]
         [DisplayName("birthday")]
         public System.Nullable<System.DateTime> birthday { get; set; }
+
+		[NotMapped]
+		[DisplayName(Constants.NotMapped)]
+		public string display_birthday { get { return CMSSolutions.Websites.Extensions.Utilities.DateString(birthday); } }
         
         [DataMember()]
         [DisplayName("mail_address")]
@@ -35,10 +38,18 @@ namespace CMSSolutions.Websites.Entities
         [DataMember()]
         [DisplayName("start_working_date")]
         public System.Nullable<System.DateTime> start_working_date { get; set; }
-        
+
+		[NotMapped]
+		[DisplayName(Constants.NotMapped)]
+		public string display_working_date { get { return CMSSolutions.Websites.Extensions.Utilities.DateString(start_working_date); } }
+
         [DataMember()]
         [DisplayName("hr_user_id")]
-        public System.Nullable<int> hr_user_id { get; set; }
+		public int hr_user_id { get; set; }
+
+		[NotMapped]
+		[DisplayName("hr_full_name")]
+		public string hr_full_name { get; set; }
         
         [DataMember()]
         [DisplayName("cv_path")]
@@ -47,11 +58,19 @@ namespace CMSSolutions.Websites.Entities
         [DataMember()]
         [DisplayName("created_user_id")]
         public int created_user_id { get; set; }
+
+		[NotMapped]
+		[DisplayName("created_full_name")]
+		public string created_full_name { get; set; }
         
         [DataMember()]
         [DisplayName("created_date")]
         public System.DateTime created_date { get; set; }
-        
+
+		[NotMapped]
+		[DisplayName(Constants.NotMapped)]
+		public string display_created_date { get { return CMSSolutions.Websites.Extensions.Utilities.DateString(created_date); } }
+
         [DataMember()]
         [DisplayName("updated_user_id")]
         public System.Nullable<int> updated_user_id { get; set; }
@@ -59,6 +78,32 @@ namespace CMSSolutions.Websites.Entities
         [DataMember()]
         [DisplayName("updated_date")]
         public System.Nullable<System.DateTime> updated_date { get; set; }
+
+		[NotMapped]
+		[DisplayName(Constants.NotMapped)]
+		public string display_updated_date { get { return CMSSolutions.Websites.Extensions.Utilities.DateString(updated_date); } }
+
+		[DataMember()]
+		[DisplayName("notes")]
+		public string notes { get;set;}
+
+		[NotMapped]
+		[DisplayName("is_employee")]
+		public bool is_employee
+		{
+			get
+			{
+				if (start_working_date != null)
+				{
+					if (start_working_date.Value > DateTime.Now)
+					{
+						return true;
+					}
+				}
+
+				return false;
+			} 
+		}
     }
     
     public class CandidatesMapping : EntityTypeConfiguration<Candidates>, IEntityTypeConfiguration
@@ -74,12 +119,13 @@ namespace CMSSolutions.Websites.Entities
             this.Property(m => m.phone_number).HasMaxLength(11);
             this.Property(m => m.address).HasMaxLength(500);
             this.Property(m => m.start_working_date);
-            this.Property(m => m.hr_user_id);
+            this.Property(m => m.hr_user_id).IsRequired();
             this.Property(m => m.cv_path).IsRequired().HasMaxLength(500);
             this.Property(m => m.created_user_id).IsRequired();
             this.Property(m => m.created_date).IsRequired();
             this.Property(m => m.updated_user_id);
             this.Property(m => m.updated_date);
+			this.Property(m => m.notes);
         }
     }
 }

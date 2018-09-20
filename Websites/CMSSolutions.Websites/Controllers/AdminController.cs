@@ -7,7 +7,7 @@ using CMSSolutions.Web.Themes;
 namespace CMSSolutions.Websites.Controllers
 {
     [Themed(IsDashboard = true), Authorize]
-    public class AdminController : BaseController
+	public class AdminController : BaseAdminController
     {
         private readonly ICacheManager cacheManager;
         private readonly IStaticCacheManager staticCacheManager;

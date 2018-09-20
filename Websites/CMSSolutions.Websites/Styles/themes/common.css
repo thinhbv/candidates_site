@@ -84,3 +84,7 @@ label {
      padding: 13px 0 0;
      position:relative
  }
+.date-control-cust {
+	margin-right: 3px !important;
+    width: 93% !important;
+}

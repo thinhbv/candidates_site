@@ -19,7 +19,7 @@ namespace CMSSolutions.Websites.Controllers
     
     [Authorize()]
     [Themed(IsDashboard=true)]
-    public class LanguagesController : BaseController
+	public class LanguagesController : BaseAdminController
     {
         
         private readonly ILanguagesService service;

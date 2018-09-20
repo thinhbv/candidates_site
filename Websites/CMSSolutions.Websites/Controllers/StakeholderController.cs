@@ -19,7 +19,7 @@ namespace CMSSolutions.Websites.Controllers
     
     [Authorize()]
     [Themed(IsDashboard=true)]
-    public class StakeholderController : BaseController
+	public class StakeholderController : BaseAdminController
     {
         
         private readonly IStakeholderService service;

@@ -19,7 +19,7 @@ namespace CMSSolutions.Websites.Controllers
     
     [Authorize()]
     [Themed(IsDashboard=true)]
-    public class InterviewController : BaseController
+	public class InterviewController : BaseAdminController
     {
         
         private readonly IInterviewService service;
@@ -37,7 +37,7 @@ namespace CMSSolutions.Websites.Controllers
             WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Interviews"), Url = "#" });
             var result = new ControlGridFormResult<Interview>();
             var siteSettings = WorkContext.Resolve<SiteSettings>();
-            result.Title = this.T("Management Interview");
+            result.Title = this.T("Interview List");
             result.CssClass = "table table-bordered table-striped";
             result.UpdateActionName = "Update";
             result.IsAjaxSupported = true;
@@ -47,6 +47,7 @@ namespace CMSSolutions.Websites.Controllers
             result.GridWrapperStartHtml = Constants.Grid.GridWrapperStartHtml;
             result.GridWrapperEndHtml = Constants.Grid.GridWrapperEndHtml;
             result.ClientId = TableName;
+
             result.AddColumn(x => x.Id);
             result.AddColumn(x => x.candidate_id);
             result.AddColumn(x => x.round_id);
@@ -61,10 +62,12 @@ namespace CMSSolutions.Websites.Controllers
             result.AddColumn(x => x.created_user_id);
             result.AddColumn(x => x.updated_date);
             result.AddColumn(x => x.updated_user_id);
+
             result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(Constants.RowLeft).HasRow(true);
             result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
             result.AddRowAction(true).HasText(this.T("Delete")).HasName("Delete").HasValue(x => Convert.ToString(x.Id)).HasButtonStyle(ButtonStyle.Danger).HasButtonSize(ButtonSize.ExtraSmall).HasConfirmMessage(this.T(Constants.Messages.ConfirmDeleteRecord));
-            result.AddReloadEvent("UPDATE_ENTITY_COMPLETE");
+            
+			result.AddReloadEvent("UPDATE_ENTITY_COMPLETE");
             result.AddReloadEvent("DELETE_ENTITY_COMPLETE");
             return result;
         }

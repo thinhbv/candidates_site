@@ -19,7 +19,7 @@
     
     [Authorize()]
     [Themed(IsDashboard=true)]
-    public class PositionsController : BaseController
+	public class PositionsController : BaseAdminController
     {
         
         private readonly IPositionsService service;

@@ -225,8 +225,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CandidatesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\InterviewController.cs" />
+    <Compile Include="Controllers\LanguagesController.cs" />
+    <Compile Include="Controllers\LevelCandidatesController.cs" />
+    <Compile Include="Controllers\PositionsController.cs" />
+    <Compile Include="Controllers\StakeholderController.cs" />
+    <Compile Include="Entities\Candidates.cs" />
+    <Compile Include="Entities\Interview.cs" />
+    <Compile Include="Entities\Languages.cs" />
+    <Compile Include="Entities\LevelCandidates.cs" />
+    <Compile Include="Entities\Positions.cs" />
+    <Compile Include="Entities\Stakeholder.cs" />
     <Compile Include="Extensions\Constants.cs" />
     <Compile Include="Extensions\HtmlHelper.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
@@ -237,9 +249,39 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Menus\NavigationProvider.cs" />
+    <Compile Include="Models\CandidatesModel.cs" />
+    <Compile Include="Models\InterviewModel.cs" />
+    <Compile Include="Models\LanguagesModel.cs" />
+    <Compile Include="Models\LevelCandidatesModel.cs" />
+    <Compile Include="Models\PositionsModel.cs" />
+    <Compile Include="Models\StakeholderModel.cs" />
     <Compile Include="Permissions\AdminPermissions.cs" />
+    <Compile Include="Permissions\CandidatesPermissions.cs" />
+    <Compile Include="Permissions\InterviewPermissions.cs" />
+    <Compile Include="Permissions\LanguagesPermissions.cs" />
+    <Compile Include="Permissions\LevelCandidatesPermissions.cs" />
+    <Compile Include="Permissions\PositionsPermissions.cs" />
+    <Compile Include="Permissions\StakeholderPermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routes.cs" />
+    <Compile Include="Services\CandidatesService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\InterviewService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\LanguagesService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\LevelCandidatesService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\PositionsService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\StakeholderService.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Error.html" />
@@ -1193,11 +1235,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Entities\" />
     <Folder Include="Images\themes\" />
     <Folder Include="Media\Temp\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
     <Folder Include="Tasks\" />
   </ItemGroup>
   <ItemGroup>

@@ -51,13 +51,10 @@
             result.GridWrapperEndHtml = CMSSolutions.Constants.Grid.GridWrapperEndHtml;
             result.ClientId = TableName;
 
-            result.AddColumn(x => x.Id, T("ID"));
+            result.AddColumn(x => x.Id, T("ID")).HasWidth(60);
 			result.AddColumn(x => x.full_name, T("Full Name"));
 			result.AddColumn(x => x.mail_address, T("Email"));
 			result.AddColumn(x => x.phone_number, T("Phone Number"));
-			result.AddColumn(x => x.hr_full_name, T("HR Recipient"));
-            result.AddColumn(x => x.created_date, T("Created Date"));
-            result.AddColumn(x => x.updated_date, T("Updated Date"));
 			result.AddColumn(x => x.is_employee)
 				.HasHeaderText(T("Is Employed"))
 				.AlignCenter()
@@ -65,8 +62,10 @@
 				.RenderAsStatusImage();
 
             result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(CMSSolutions.Constants.RowLeft).HasRow(true);
+			result.AddRowAction().HasText(this.T("View CV")).HasUrl(x => Url.Action("CandidateProfile", new { id = x.Id })).HasButtonStyle(ButtonStyle.Info).HasButtonSize(ButtonSize.ExtraSmall);
+			result.AddRowAction().HasText(this.T("Send Mail")).HasUrl(x => Url.Action("SendMail", new { id = x.Id })).HasButtonStyle(ButtonStyle.Success).HasButtonSize(ButtonSize.ExtraSmall);
             result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
-            result.AddRowAction(true).HasText(this.T("Delete")).HasName("Delete").HasValue(x => Convert.ToString(x.Id)).HasButtonStyle(ButtonStyle.Danger).HasButtonSize(ButtonSize.ExtraSmall).HasConfirmMessage(this.T(CMSSolutions.Constants.Messages.ConfirmDeleteRecord));
+			result.AddRowAction(true).HasText(this.T("Delete")).HasName("Delete").HasValue(x => Convert.ToString(x.Id)).HasButtonStyle(ButtonStyle.Danger).HasButtonSize(ButtonSize.ExtraSmall).HasConfirmMessage(this.T(CMSSolutions.Constants.Messages.ConfirmDeleteRecord));
             
 			result.AddReloadEvent("UPDATE_ENTITY_COMPLETE");
             result.AddReloadEvent("DELETE_ENTITY_COMPLETE");
@@ -77,7 +76,7 @@
         private ControlGridAjaxData<Candidates> GetModule_Candidates(ControlGridFormRequest options)
         {
             int totals;
-            var items = this.service.GetRecords(options, out totals);
+			var items = this.service.GetRecords(options, out totals, x => x.status == (int)CandidateStatus.Actived);
             var result = new ControlGridAjaxData<Candidates>(items, totals);
             return result;
         }
@@ -129,6 +128,7 @@
 
 				result2.AddColumn(x => x.language_name, T("Skill"));
 				result2.AddColumn(x => x.level_name, T("Level"));
+				result2.AddColumn(x => x.month, T("Experience(month)"));
 				result2.AddColumn(x => x.is_main)
 					.HasHeaderText(T("Main Skill"))
 					.AlignCenter()
@@ -160,6 +160,56 @@
 
 			return result;
         }
+
+		[Url("admin/candidates/view-profile/{id}")]
+		public ActionResult CandidateProfile(int id)
+		{
+			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Candidates"), Url = Url.Action("Index") });
+			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("View Profile"), Url = "#" });
+
+			//var text = T("Create Candidate");
+			//var model = new CandidatesModel();
+			//if (id > 0)
+			//{
+			//	text = T("Edit Candidate");
+			//	model = this.service.GetById(id);
+			//}
+
+			//WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Candidates"), Url = Url.Action("Index") });
+			//WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = text, Url = "#" });
+
+			//var result = new ControlFormResult<CandidatesModel>(model);
+			//result.Title = text;
+			//result.FormMethod = FormMethod.Post;
+			//result.UpdateActionName = "Update";
+			//result.ShowCancelButton = false;
+			//result.ShowBoxHeader = false;
+			//result.FormWrapperStartHtml = CMSSolutions.Constants.Form.FormWrapperStartHtml;
+			//result.FormWrapperEndHtml = CMSSolutions.Constants.Form.FormWrapperEndHtml;
+			//result.AddAction().HasText(this.T("Cancel")).HasUrl(this.Url.Action("Index")).HasButtonStyle(ButtonStyle.Danger);
+
+			return View("ViewProfile");
+		}
+
+		[Themed(false)]
+		[Url("admin/candidates/send-mail/{id}")]
+		public ActionResult SendMail(int id)
+		{
+			var model = new MailModel();
+			var result = new ControlFormResult<MailModel>(model)
+			{
+				Title = T("Send Mail Recruitment"),
+				FormMethod = FormMethod.Post,
+				UpdateActionName = "Update",
+				SubmitButtonText = T("Save"),
+				CancelButtonText = T("Close"),
+				ShowBoxHeader = false,
+				FormWrapperStartHtml = CMSSolutions.Constants.Form.FormWrapperStartHtml,
+				FormWrapperEndHtml = CMSSolutions.Constants.Form.FormWrapperEndHtml
+			};
+
+			return result;
+		}
 
 		private ControlGridAjaxData<LevelCandidates> GetModule_LevelCandidates(ControlGridFormRequest options)
 		{

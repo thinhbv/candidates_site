@@ -58,10 +58,6 @@ namespace CMSSolutions.Websites.Controllers
             result.AddColumn(x => x.evaluation);
             result.AddColumn(x => x.status);
             result.AddColumn(x => x.interview_result);
-            result.AddColumn(x => x.created_date);
-            result.AddColumn(x => x.created_user_id);
-            result.AddColumn(x => x.updated_date);
-            result.AddColumn(x => x.updated_user_id);
 
             result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(Constants.RowLeft).HasRow(true);
             result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);

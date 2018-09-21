@@ -78,7 +78,7 @@ namespace CMSSolutions.Websites.Entities
             this.Property(m => m.interview_date_plan);
             this.Property(m => m.interview_date);
             this.Property(m => m.interviewer_id).IsRequired();
-            this.Property(m => m.evaluation).HasMaxLength(1073741823);
+            this.Property(m => m.evaluation);
             this.Property(m => m.status).IsRequired();
             this.Property(m => m.interview_result).HasMaxLength(250);
             this.Property(m => m.created_date).IsRequired();

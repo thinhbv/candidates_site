@@ -258,6 +258,7 @@
     <Compile Include="Models\LanguagesModel.cs" />
     <Compile Include="Models\LevelCandidatesModel.cs" />
     <Compile Include="Models\LevelsModel.cs" />
+    <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\PositionsModel.cs" />
     <Compile Include="Models\StakeholderModel.cs" />
     <Compile Include="Permissions\AdminPermissions.cs" />
@@ -1315,6 +1316,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\V1.0.0.0.pubxml" />
+    <Content Include="Views\Candidates\ViewProfile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

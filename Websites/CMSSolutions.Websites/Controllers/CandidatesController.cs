@@ -17,6 +17,7 @@
     using CMSSolutions.Web.Routing;
 	using CMSSolutions.Web.Security.Services;
 	using CMSSolutions.Websites.Extensions;
+	using System.Web;
     
     
     [Authorize()]
@@ -107,7 +108,7 @@
 
 			result.RegisterFileUploadOptions("cv_path.FileName", new ControlFileUploadOptions
 			{
-				AllowedExtensions = "doc,docx"
+				AllowedExtensions = "doc,docx,pdf"
 			});
 			result.RegisterExternalDataSource(x => x.hr_user_id, y => BindHRUsers(model.hr_user_id));
 
@@ -167,28 +168,14 @@
 			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Candidates"), Url = Url.Action("Index") });
 			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("View Profile"), Url = "#" });
 
-			//var text = T("Create Candidate");
-			//var model = new CandidatesModel();
-			//if (id > 0)
-			//{
-			//	text = T("Edit Candidate");
-			//	model = this.service.GetById(id);
-			//}
+			ViewBag.Title = T("View Profile");
 
-			//WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Candidates"), Url = Url.Action("Index") });
-			//WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = text, Url = "#" });
+			var model = new DataViewModel();
+			var item = this.service.GetById(id);
+			var requestUrl = WorkContext.HttpContext.Request.Url;
+			model.Data = item.cv_path;
 
-			//var result = new ControlFormResult<CandidatesModel>(model);
-			//result.Title = text;
-			//result.FormMethod = FormMethod.Post;
-			//result.UpdateActionName = "Update";
-			//result.ShowCancelButton = false;
-			//result.ShowBoxHeader = false;
-			//result.FormWrapperStartHtml = CMSSolutions.Constants.Form.FormWrapperStartHtml;
-			//result.FormWrapperEndHtml = CMSSolutions.Constants.Form.FormWrapperEndHtml;
-			//result.AddAction().HasText(this.T("Cancel")).HasUrl(this.Url.Action("Index")).HasButtonStyle(ButtonStyle.Danger);
-
-			return View("ViewProfile");
+			return View("ViewProfile", model);
 		}
 
 		[Themed(false)]

@@ -254,6 +254,7 @@
     </Compile>
     <Compile Include="Menus\NavigationProvider.cs" />
     <Compile Include="Models\CandidatesModel.cs" />
+    <Compile Include="Models\DataViewModel.cs" />
     <Compile Include="Models\InterviewModel.cs" />
     <Compile Include="Models\LanguagesModel.cs" />
     <Compile Include="Models\LevelCandidatesModel.cs" />

@@ -3,8 +3,7 @@ namespace CMSSolutions.Websites.Models
     using System;
     using CMSSolutions.Web.UI.ControlForms;
     using CMSSolutions.Websites.Entities;
-    
-    
+
     public class LevelCandidatesModel
     {
         [ControlHidden()]
@@ -13,19 +12,19 @@ namespace CMSSolutions.Websites.Models
 		[ControlHidden()]
 		public int candidate_id { get; set; }
 
-        [ControlChoice(ControlChoice.DropDownList, Required = true, LabelText = "Skill", ContainerCssClass = Constants.ContainerCssClassCol12, ContainerRowIndex = 2)]
+		[ControlChoice(ControlChoice.DropDownList, Required = true, LabelText = "Skill", ContainerCssClass = "col-xs-8 col-md-6", ContainerRowIndex = 0)]
 		public int language_id { get; set; }
-        
-		[ControlChoice(ControlChoice.DropDownList, Required = true, LabelText = "Main Skill", ContainerCssClass = Constants.ContainerCssClassCol12, ContainerRowIndex = 2)]
+
+		[ControlChoice(ControlChoice.DropDownList, Required = true, LabelText = "Main Skill", ContainerCssClass = "col-xs-8 col-md-6", ContainerRowIndex = 1)]
 		public int main_skill { get; set; }
 
-        [ControlChoice(ControlChoice.DropDownList, Required = true, LabelText = "Level", ContainerCssClass = Constants.ContainerCssClassCol12, ContainerRowIndex = 2)]
+		[ControlChoice(ControlChoice.DropDownList, Required = true, LabelText = "Level", ContainerCssClass = "col-xs-8 col-md-6", ContainerRowIndex = 2)]
 		public int level_dev { get; set; }
 
-		[ControlNumeric(LabelText = "Month of Experience", Required = true, ContainerCssClass = Constants.ContainerCssClassCol3, ContainerRowIndex = 0)]	
+		[ControlNumeric(LabelText = "Month of Experience", Required = true, MinimumValue = "1", MaximumValue = "500", ContainerCssClass = "col-xs-4 col-md-4", ContainerRowIndex = 3)]
 		public int month { get; set; }
 
-		[ControlText(LabelText = "Comment", Required = false, Type = ControlText.MultiText, Rows = 2, ContainerCssClass = Constants.ContainerCssClassCol12, ContainerRowIndex = 3)]
+		[ControlText(LabelText = "Comment", Required = false, Type = ControlText.MultiText, Rows = 2, ContainerCssClass = Constants.ContainerCssClassCol12, ContainerRowIndex = 4)]
 		public string notes { get; set; }
 
         public static implicit operator LevelCandidatesModel(LevelCandidates entity)

@@ -78,6 +78,10 @@ namespace CMSSolutions.Websites.Entities
         [DataMember()]
         [DisplayName("updated_date")]
         public System.Nullable<System.DateTime> updated_date { get; set; }
+		
+		[DataMember()]
+		[DisplayName("status")]
+		public int status { get; set; }
 
 		[NotMapped]
 		[DisplayName(Constants.NotMapped)]

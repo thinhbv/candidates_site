@@ -125,7 +125,7 @@
 				result2.GridWrapperStartHtml = CMSSolutions.Constants.Grid.GridWrapperStartHtml;
 				result2.GridWrapperEndHtml = CMSSolutions.Constants.Grid.GridWrapperEndHtml;
 				result2.ClientId = TableName;
-				result2.ActionsColumnWidth = 100;
+				result2.ActionsColumnWidth = 130;
 
 				result2.AddColumn(x => x.language_name, T("Skill"));
 				result2.AddColumn(x => x.level_name, T("Level"));
@@ -138,15 +138,15 @@
 				result2.AddAction().HasText(this.T("Create"))
 					.HasUrl(this.Url.Action("Edit", "LevelCandidates", new { id = 0, candidateId = id }))
 					.HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false)
-					.HasCssClass(CMSSolutions.Constants.RowLeft).HasRow(true).ShowModalDialog();
+					.HasCssClass(CMSSolutions.Constants.RowLeft).HasRow(true).ShowModalDialog(600, 600);
 
 				result2.AddRowAction().HasText(this.T("Edit"))
 					.HasUrl(x => Url.Action("Edit", "LevelCandidates", new { id = x.Id, candidateId = id }))
-					.HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall).ShowModalDialog();
+					.HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall).ShowModalDialog(600, 600);
 
 				result2.AddRowAction(true)
 					.HasText(T("Delete"))
-					.HasName("Delete")
+					.HasName("DeleteLevel")
 					.HasValue(x => x.Id)
 					.HasButtonStyle(ButtonStyle.Danger)
 					.HasButtonSize(ButtonSize.ExtraSmall)
@@ -171,11 +171,47 @@
 
 			int totals;
 			var languagesv = WorkContext.Resolve<ILanguagesService>();
+			var levelsv = WorkContext.Resolve<ILevelsService>();
 			var levelCandidatesv = WorkContext.Resolve<ILevelCandidatesService>();
+			var listLanguages = languagesv.GetRecords();
+			var listLevels = levelsv.GetRecords();
 
 			var items = levelCandidatesv.GetRecords(options, out totals, x => x.candidate_id == candidateId);
 
 			var result = new ControlGridAjaxData<LevelCandidates>(items, totals);
+			if (result.Count > 0)
+			{
+				if (listLanguages.Count > 0)
+				{
+					foreach (var lg in listLanguages)
+					{
+						foreach (var item in result)
+						{
+							if (item.language_id == lg.Id)
+							{
+								item.language_name = lg.name;
+								break;
+							}
+						}
+					}
+				}
+
+				if (listLevels.Count > 0)
+				{
+					foreach (var vl in listLevels)
+					{
+						foreach (var item in result)
+						{
+							if (item.level_dev == vl.Id)
+							{
+								item.level_name = vl.name;
+								break;
+							}
+						}
+					}
+				}
+			}
+			
 			return result;
 		}
 
@@ -226,19 +262,17 @@
 				status = true;
             }
             item.full_name = model.full_name;
-			if (string.IsNullOrEmpty(model.birthday))
+			if (!string.IsNullOrEmpty(model.birthday))
 			{
-				model.birthday = Extensions.Constants.DateTimeMin;
+				item.birthday = DateTime.ParseExact(model.birthday, Extensions.Constants.DateTimeFomat, CultureInfo.InvariantCulture);
 			}
-			item.birthday = DateTime.ParseExact(model.birthday, Extensions.Constants.DateTimeFomat, CultureInfo.InvariantCulture);
             item.mail_address = model.mail_address;
             item.phone_number = model.phone_number;
             item.address = model.address;
-			if (string.IsNullOrEmpty(model.start_working_date))
+			if (!string.IsNullOrEmpty(model.start_working_date))
 			{
-				model.start_working_date = Extensions.Constants.DateTimeMin;
+				item.start_working_date = DateTime.ParseExact(model.start_working_date, Extensions.Constants.DateTimeFomat, CultureInfo.InvariantCulture);
 			}
-			item.start_working_date = DateTime.ParseExact(model.start_working_date, Extensions.Constants.DateTimeFomat, CultureInfo.InvariantCulture);
 
             item.hr_user_id = model.hr_user_id;
             item.cv_path = model.cv_path;
@@ -258,9 +292,32 @@
         [FormButton("Delete")]
         public ActionResult Delete(int id)
         {
+			var text = string.Empty;
             var model = service.GetById(id);
-            service.Delete(model);
-			return new AjaxResult().NotifyMessage("DELETE_ENTITY_COMPLETE");
+			if (model.status == (int)CandidateStatus.Actived)
+			{
+				model.status = (int)CandidateStatus.Blocked;
+				text = T("Block success.");
+			}
+			else
+			{
+				model.status = (int)CandidateStatus.Actived;
+				text = T("Active success.");
+			}
+            service.Update(model);
+
+			return new AjaxResult().NotifyMessage("DELETE_ENTITY_COMPLETE").Alert(text);
         }
+
+		[ActionName("Update")]
+		[FormButton("DeleteLevel")]
+		public ActionResult DeleteLevel(int id)
+		{
+			var levelsv = WorkContext.Resolve<ILevelCandidatesService>();
+			var model = levelsv.GetById(id);
+			levelsv.Delete(model);
+
+			return new AjaxResult().NotifyMessage("DELETE_ENTITY_COMPLETE").Alert(T("Deleted success."));
+		}
     }
 }

@@ -22,6 +22,5 @@ namespace CMSSolutions.Websites.Models
                 pos_name = entity.pos_name
             };
         }
-
     }
 }

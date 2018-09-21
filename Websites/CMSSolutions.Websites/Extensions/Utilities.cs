@@ -197,6 +197,55 @@ namespace CMSSolutions.Websites.Extensions
 			return converttext.ToLower();
 		}
 
+		public static List<SelectListItem> GetListDay()
+		{
+			var list = new List<SelectListItem>();
+			for (int i = 1; i <= 31; i++)
+			{
+				var text = (i <= 9 ? "0" + i : i.ToString());
+				list.Add(new SelectListItem
+				{
+					Value = text,
+					Text = text,
+				});
+			}
+
+			return list;
+		}
+
+		public static List<SelectListItem> GetListMonth()
+		{
+			var list = new List<SelectListItem>();
+			for (int i = 1; i <= 12; i++)
+			{
+				var text = (i <= 9 ? "0" + i : i.ToString());
+				list.Add(new SelectListItem
+				{
+					Value = text,
+					Text = "Month " + text,
+				});
+			}
+
+			return list;
+		}
+
+		public static List<SelectListItem> GetListYear()
+		{
+			var year = DateTime.Now.Year;
+			var list = new List<SelectListItem>();
+			for (int i = 1900; i <= year; i++)
+			{
+				var text = i.ToString();
+				list.Add(new SelectListItem
+				{
+					Value = text,
+					Text = text,
+				});
+			}
+
+			return list.OrderByDescending(x => x.Value).ToList();
+		}
+
         public static void WriteEventLog(string messages)
         {
             try

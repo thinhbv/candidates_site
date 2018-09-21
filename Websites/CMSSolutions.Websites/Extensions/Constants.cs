@@ -3,6 +3,8 @@ namespace CMSSolutions.Websites.Extensions
 {
     public class Constants
     {
+		public const string CandidateId = "CandidateId";
+
 		public const string IsNull = "null";
 		public const string IsUndefined = "undefined";
 

@@ -40,7 +40,11 @@ namespace CMSSolutions.Websites.Menus
 				.Action("Index", "Positions", new { area = "" })
 				.Permission(PositionsPermissions.ManagerPositions));
 
-			builder.Add(T("Stakeholder"), "2", b => b
+			builder.Add(T("Levels"), "2", b => b
+				.Action("Index", "Levels", new { area = "" })
+				.Permission(LevelsPermissions.ManagerLevels));
+
+			builder.Add(T("Stakeholder"), "3", b => b
 				.Action("Index", "Stakeholder", new { area = "" })
 				.Permission(StakeholderPermissions.ManagerStakeholder));
 		}

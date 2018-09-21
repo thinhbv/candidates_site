@@ -34,7 +34,7 @@
 		[ControlDatePicker(LabelText = "Start Working Date", CssClass = CMSSolutions.Websites.Extensions.Constants.DateCustomCss, Required = false, ContainerCssClass = Constants.ContainerCssClassCol3, ContainerRowIndex = 2)]
 		public string start_working_date { get; set; }
 
-		[ControlText(LabelText = "Notes", Required = true, Type = ControlText.MultiText, Rows = 2, ContainerCssClass = Constants.ContainerCssClassCol12, ContainerRowIndex = 3)]
+		[ControlText(LabelText = "Notes", Required = false, Type = ControlText.MultiText, Rows = 2, ContainerCssClass = Constants.ContainerCssClassCol12, ContainerRowIndex = 3)]
 		public string notes { get; set; }
 
         public static implicit operator CandidatesModel(Candidates entity)

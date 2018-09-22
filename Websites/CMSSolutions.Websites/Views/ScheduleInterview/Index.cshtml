@@ -1,0 +1,126 @@
+﻿<script src="/Scripts/codebase/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
+<script src="/Scripts/codebase/ext/dhtmlxscheduler_year_view.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="/Scripts/codebase/dhtmlxscheduler_material.css" type="text/css" charset="utf-8">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+<div class="container-fluid">
+	<div class="dhx_cal_container panel" id="scheduler_here">
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date"></div>
+
+			<div class="dhx_cal_tab" name="day_tab"></div>
+			<div class="dhx_cal_tab" name="week_tab"></div>
+			<div class="dhx_cal_tab" name="month_tab"></div>
+			<div class="dhx_cal_tab" name="year_tab"></div>
+		</div>
+		<div class="dhx_cal_header"></div>
+		<div class="dhx_cal_data"></div>
+	</div>
+
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+	window.onload = init();
+	function init() {
+
+		scheduler.config.xml_date = "%Y-%m-%d %H:%i";
+		scheduler.config.first_hour = 8;
+		scheduler.config.limit_time_select = true;
+		scheduler.config.details_on_create = true;
+		scheduler.config.details_on_dblclick = true;		scheduler.load("/Media/common/events.json", "json", function () {
+			//scheduler.showLightbox(2);
+		});
+		scheduler.init('scheduler_here', new Date(2018, 9, 22), "month");
+		scheduler.locale.labels.section_description = "Title";		scheduler.config.lightbox.sections = [
+		{
+			name: "Title", height: 40, type: "textarea", map_to: "text", focus: true
+		},
+		{
+			name: "Position", height: 40, type: "select", map_to: "level_id", options: [
+			{ key: 1, label: "Junior" },
+			{ key: 2, label: "Senior" },
+			{ key: 3, label: "PM" },
+			{ key: 4, label: "BrSE" }]
+		},
+		{
+			name: "Language", height: 40, type: "select", map_to: "lang_id", options: [
+			{ key: 1, label: ".Net" },
+			{ key: 2, label: "Java" },
+			{ key: 3, label: "Ruby" },
+			{ key: 4, label: "Python" }]
+		},
+		{
+			name: "Candidate", height: 40, type: "select", map_to: "can_id", options: [
+			{ key: 1, label: "Nguyễn Công Phượng" },
+			{ key: 2, label: "Bùi Tiến Dũng" },
+			{ key: 3, label: "Phan Văn Đức" },
+			{ key: 4, label: "Nguyễn Quang Hải" }]
+		},
+		{
+			name: "Interviewer", type: "select", height: 40, map_to: "user_id", options: [
+		{ key: 1, label: "Vương Văn Hùng" },
+		{ key: 2, label: "Bùi Văn Thịnh" }]
+		},
+		{ name: "time", height: 72, type: "time", map_to: "auto" }
+		];
+		var holder2 = scheduler.getLabel("unit_id", 2);// ->"John Williams"		scheduler.attachEvent("onEventSave", function (id, ev) {
+			//if (!ev.text) {
+			//	return false;
+			//}
+			var title = ev.text;
+			var candidateid = ev.can_id;
+			var langid = ev.lang_id;
+			var interviewid = ev.user_id;
+			var levelid = ev.level_id;
+			var startdate = ev.start_date;
+			var enddate = ev.end_date;
+			//var time = scheduler.formSection('time');
+			//var descr = scheduler.formSection('description');
+
+			////gets the value
+			//var value = time.getValue();
+			//var value1 = descr.getValue();
+
+			////sets the value
+			//descr.setValue('abc'); //for sections that contain the only control
+			//time.setValue(null, { start_date: new Date(2009, 03, 10), end_date: new Date(2012, 03, 10) });
+			$.ajax({
+				type: 'POST',
+				url: '@Url.Action("Save", "ScheduleInterview")',
+				data: { interviewid: interviewid, candidateid: candidateid, levelid: levelid, startdate: startdate, enddate: enddate, langid: langid, title:title },
+				dataType: 'JSON',
+				success: function (data) {
+
+				}
+			});
+			return true;
+		})
+	}
+</script>
+
+<style type="text/css">
+
+	.well {
+		text-align: right;
+	}
+
+	.container-fluid #scheduler_here {
+		height: 700px;
+		width: 100%;
+		border: 1px solid #cecece;
+	}
+
+	#scheduler_here {
+		border-radius: 4px;
+	}
+</style>
+
+

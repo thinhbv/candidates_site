@@ -10,7 +10,11 @@ namespace CMSSolutions.Websites.Models
         
         [ControlHidden()]
         public int Id { get; set; }
-        
+
+
+		[ControlNumeric(LabelText = "name", Required = true, ContainerCssClass = Constants.ContainerCssClassCol3, ContainerRowIndex = 0)]
+		public string name { get; set; }
+
         [ControlNumeric(LabelText="pos_id", Required=true, ContainerCssClass=Constants.ContainerCssClassCol3, ContainerRowIndex=0)]
         public int pos_id { get; set; }
         

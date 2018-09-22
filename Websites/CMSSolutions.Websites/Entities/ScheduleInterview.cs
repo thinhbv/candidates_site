@@ -11,6 +11,9 @@ namespace CMSSolutions.Websites.Entities
     [DataContract()]
     public class ScheduleInterview : BaseEntity<int>
     {
+		[DataMember()]
+		[DisplayName("name")]
+		public string name { get; set; }
         
         [DataMember()]
         [DisplayName("pos_id")]
@@ -38,7 +41,7 @@ namespace CMSSolutions.Websites.Entities
 
 		[DataMember()]
 		[DisplayName("interviewers_id")]
-		public int interviewers_id { get; set; }
+		public string interviewers_id { get; set; }
 
 		[DataMember()]
 		[DisplayName("start_date")]

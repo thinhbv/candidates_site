@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<data>
+<coll_options for='lang_id'>
+<item value='1' label='.NET'></item>
+<item value='2' label='Javascript'></item>
+<item value='3' label='Java'></item>
+<item value='5' label='Ruby'></item>
+<item value='5' label='Python'></item>
+</coll_options>
+<coll_options for='fruit_id'><item value='1' label='Orange'></item>
+<item value='2' label='Banana'></item>
+<item value='3' label='Peach'></item>
+<item value='4' label='Kiwi'></item>
+<item value='5' label='Plum'></item>
+<item value='6' label='Grapefruit'></item>
+<item value='7' label='Lime'></item>
+<item value='8' label='Lemon'></item>
+<item value='9' label='Mandarin'></item>
+<item value='10' label='Pineapple'></item>
+</coll_options></data>

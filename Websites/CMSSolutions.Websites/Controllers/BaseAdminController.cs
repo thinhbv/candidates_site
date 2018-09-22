@@ -8,6 +8,7 @@ using CMSSolutions.Localization.Domain;
 using CMSSolutions.Net.Mail;
 using CMSSolutions.Web;
 using CMSSolutions.Web.Mvc;
+using CMSSolutions.Web.Security.Services;
 using CMSSolutions.Websites.Entities;
 using CMSSolutions.Websites.Extensions;
 using CMSSolutions.Websites.Models;
@@ -43,6 +44,14 @@ namespace CMSSolutions.Websites.Controllers
 			}
 
 			service.Send(mailMessage);
+		}
+		public string GetListToBCC()
+		{
+			var listBCC = string.Empty;
+			var memberSV = WorkContext.Resolve<IMembershipService>();
+			var listUsers = memberSV.GetUsersByRole(int.Parse(Extensions.Constants.ManagerRoleId));
+			listBCC = string.Join(",", listUsers.Select(x => x.Email));
+			return listBCC;
 		}
     }
 }

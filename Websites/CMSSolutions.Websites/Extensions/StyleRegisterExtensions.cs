@@ -116,6 +116,7 @@ namespace CMSSolutions.Websites.Extensions
             register.Include("themes/smartadmin-skins.css");
             register.Include("themes/common.css");
             register.Include("themes/box.css");
+			register.Include("codebase/dhtmlxscheduler_material.css");
         }
 
         public static void IncludeThemesDefaults(this StyleRegister register)

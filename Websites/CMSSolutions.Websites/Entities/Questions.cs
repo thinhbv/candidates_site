@@ -11,7 +11,11 @@ namespace CMSSolutions.Websites.Entities
     [DataContract()]
     public class Questions : BaseEntity<int>
     {
-        
+
+		[DataMember()]
+		[DisplayName("level_id")]
+		public int level_id { get; set; }
+
         [DataMember()]
         [DisplayName("language_id")]
         public int language_id { get; set; }

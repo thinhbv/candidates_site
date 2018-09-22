@@ -1,4 +1,4 @@
-namespace CMSSolutions.Websites.Controllers
+﻿namespace CMSSolutions.Websites.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -15,11 +15,12 @@ namespace CMSSolutions.Websites.Controllers
     using CMSSolutions.Web;
     using CMSSolutions.Web.UI.Navigation;
     using CMSSolutions.Web.Routing;
+	using CMSSolutions.Web.Security.Services;
     
     
     [Authorize()]
     [Themed(IsDashboard=true)]
-    public class ScheduleInterviewController : BaseController
+	public class ScheduleInterviewController : BaseAdminController
     {
         
         private readonly IScheduleInterviewService service;
@@ -35,30 +36,8 @@ namespace CMSSolutions.Websites.Controllers
         public ActionResult Index()
         {
             WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Schedule Interviews"), Url = "#" });
-            var result = new ControlGridFormResult<ScheduleInterview>();
-            var siteSettings = WorkContext.Resolve<SiteSettings>();
-            result.Title = this.T("Management ScheduleInterview");
-            result.CssClass = "table table-bordered table-striped";
-            result.UpdateActionName = "Update";
-            result.IsAjaxSupported = true;
-            result.DefaultPageSize = siteSettings.DefaultPageSize;
-            result.EnablePaginate = true;
-            result.FetchAjaxSource = this.GetModule_ScheduleInterview;
-            result.GridWrapperStartHtml = Constants.Grid.GridWrapperStartHtml;
-            result.GridWrapperEndHtml = Constants.Grid.GridWrapperEndHtml;
-            result.ClientId = TableName;
-            result.AddColumn(x => x.Id);
-            result.AddColumn(x => x.pos_id);
-            result.AddColumn(x => x.candidate_id);
-            result.AddColumn(x => x.interview_date);
-            result.AddColumn(x => x.created_date);
-            result.AddColumn(x => x.updated_date);
-            result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(Constants.RowLeft).HasRow(true);
-            result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
-            result.AddRowAction(true).HasText(this.T("Delete")).HasName("Delete").HasValue(x => Convert.ToString(x.Id)).HasButtonStyle(ButtonStyle.Danger).HasButtonSize(ButtonSize.ExtraSmall).HasConfirmMessage(this.T(Constants.Messages.ConfirmDeleteRecord));
-            result.AddReloadEvent("UPDATE_ENTITY_COMPLETE");
-            result.AddReloadEvent("DELETE_ENTITY_COMPLETE");
-            return result;
+            
+            return View();
         }
         
         private ControlGridAjaxData<ScheduleInterview> GetModule_ScheduleInterview(ControlGridFormRequest options)
@@ -128,5 +107,62 @@ namespace CMSSolutions.Websites.Controllers
             service.Delete(model);
 			return new AjaxResult().NotifyMessage("DELETE_ENTITY_COMPLETE");
         }
+
+		[HttpPost, ValidateInput(false)]
+		[Url("admin/save-schedule")]
+		public ActionResult Save(int[] interviewid, int candidateid, int levelid, string startdate, string enddate, int langid, string title)
+		{
+			var service = WorkContext.Resolve<IQuestionsService>();
+			var serviceSchedule = WorkContext.Resolve<IScheduleInterviewService>();
+			var memberSV = WorkContext.Resolve<IMembershipService>();
+			var serviceCandidate = WorkContext.Resolve<ICandidatesService>();
+			var list = service.GetRecords(x => x.language_id == langid && x.level_id == levelid);
+			string listQuestionId = string.Empty;
+
+			for (int i = 0; i < list.Count; i++)
+			{
+				listQuestionId = listQuestionId + list[i] + ",";
+			}
+			if (!string.IsNullOrEmpty(listQuestionId))
+			{
+				listQuestionId = listQuestionId.Substring(0, listQuestionId.Length - 1);
+			}
+			startdate = startdate.Substring(0, startdate.IndexOf(" GMT"));
+			enddate = enddate.Substring(0, enddate.IndexOf(" GMT"));
+			ScheduleInterview item = new ScheduleInterview();
+			item.name = title;
+			item.pos_id = levelid;
+			item.candidate_id = candidateid;
+			item.interviewers_id = string.Join(",", interviewid);
+			item.interview_date = DateTime.Now;
+			item.start_date = DateTime.Parse(startdate);
+			item.end_date = DateTime.Parse(enddate);
+			item.list_questions = listQuestionId;
+			item.created_date = DateTime.Now;
+			item.updated_date = DateTime.Now;
+			serviceSchedule.Insert(item);
+			var model = new DataViewModel();
+			model.Status = true;
+			MailTemplates mailTemp = new MailTemplates();
+			mailTemp.name = "【Lịch phỏng vấn】" + title;
+			mailTemp.url_template = "/Media/Default/UploadFiles/JobTemplate.html";
+			var body = System.IO.File.ReadAllText(Server.MapPath(string.Format("~{0}", mailTemp.url_template)));
+			var candidate = serviceCandidate.GetById(candidateid);
+			var reviewer = memberSV.GetRecords(x => interviewid.Contains(x.Id));
+			string mailTo = string.Empty;
+			if (candidate != null)
+			{
+				 mailTo = candidate.mail_address;
+			}
+			for (int i = 0; i < reviewer.Count; i++)
+			{
+				mailTo = "," + mailTo + reviewer[i].Email; 
+			}
+			if (!string.IsNullOrEmpty(mailTo))
+			{
+				SendEmail(mailTemp.name, body, mailTo, GetListToBCC());
+			}
+			return Json(model.Status);
+		}
     }
 }

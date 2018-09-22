@@ -24,5 +24,6 @@ namespace CMSSolutions.Websites.Extensions
 
 		public static string HRRoleId = ConfigurationManager.AppSettings["HR_ROLE_ID"];
 		public static string InterviewRoleId = ConfigurationManager.AppSettings["INTERVIEW_ROLE_ID"];
+		public static string ManagerRoleId = ConfigurationManager.AppSettings["MANAGER_ROLE_ID"];
     }
 }

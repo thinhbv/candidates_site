@@ -397,6 +397,7 @@
     <Content Include="Images\socialnetwork\twitter.png" />
     <Content Include="Media\Default\ErrorMessages\baotrihethong.jpg" />
     <Content Include="Media\Default\ErrorMessages\loikhongxacdinh.jpg" />
+    <Content Include="Media\Default\UploadFiles\JobTemplate.html" />
     <Content Include="Robots.txt" />
     <Content Include="Scripts\bootstrap\bootstrap-iconpicker.min.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
@@ -1270,8 +1271,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\themes\" />
-    <Folder Include="Media\Default\EmailTemplates\" />
-    <Folder Include="Media\Default\UploadFiles\" />
     <Folder Include="Media\Temp\" />
     <Folder Include="Tasks\" />
   </ItemGroup>

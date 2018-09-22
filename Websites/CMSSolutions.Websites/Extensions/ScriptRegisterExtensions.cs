@@ -154,9 +154,11 @@ namespace CMSSolutions.Websites.Extensions
 
         public static void IncludeThemes(this ScriptRegister register)
         {
-            register.Include("themes/jarvis.widget.min.js");
-            register.Include("themes/app.js");
-            register.Include("themes/common.js");
+			register.Include("themes/jarvis.widget.min.js");
+			register.Include("themes/app.config.js");
+			register.Include("themes/app.min.js");
+			register.Include("themes/chart.min.js");
+			register.Include("themes/common.js");
         }
 
         public static void IncludeThemesDefaults(this ScriptRegister register)

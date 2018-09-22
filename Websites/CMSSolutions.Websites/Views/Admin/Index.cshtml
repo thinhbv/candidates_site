@@ -1,1 +1,421 @@
-﻿
+﻿<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+			<div class="jarviswidget"
+				 data-widget-colorbutton="false"
+				 data-widget-editbutton="false"
+				 data-widget-togglebutton="false"
+				 data-widget-deletebutton="false"
+				 data-widget-fullscreenbutton="false"
+				 data-widget-custombutton="false"
+				 data-widget-collapsed="false"
+				 data-widget-sortable="false">
+
+				<header>
+					<h3 style="margin: 0; padding: 0 0 0 10px;">CV by Month</h3>
+				</header>
+				<div>
+					<div class="widget-body">
+						<canvas id="barChart" height="120"></canvas>
+					</div>
+
+				</div>
+			</div>
+		</article>
+
+		<article class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+			<div class="jarviswidget"
+				 data-widget-colorbutton="false"
+				 data-widget-editbutton="false"
+				 data-widget-togglebutton="false"
+				 data-widget-deletebutton="false"
+				 data-widget-fullscreenbutton="false"
+				 data-widget-custombutton="false"
+				 data-widget-collapsed="false"
+				 data-widget-sortable="false">
+
+				<header>
+					<h3 style="margin: 0; padding: 0 0 0 10px;">Languages</h3>
+				</header>
+				<div>
+					<div class="widget-body">
+						<canvas id="doughnutChart" height="120"></canvas>
+					</div>
+
+				</div>
+			</div>
+		</article>
+
+		<article class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+			<div class="jarviswidget"
+				 data-widget-colorbutton="false"
+				 data-widget-editbutton="false"
+				 data-widget-togglebutton="false"
+				 data-widget-deletebutton="false"
+				 data-widget-fullscreenbutton="false"
+				 data-widget-custombutton="false"
+				 data-widget-collapsed="false"
+				 data-widget-sortable="false">
+
+				<header>
+					<h3 style="margin: 0; padding: 0 0 0 10px;">CV Status</h3>
+				</header>
+				<div>
+					<div class="widget-body">
+						<canvas id="pieChart" height="120"></canvas>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<article class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+			<div class="jarviswidget"
+				 data-widget-colorbutton="false"
+				 data-widget-editbutton="false"
+				 data-widget-togglebutton="false"
+				 data-widget-deletebutton="false"
+				 data-widget-fullscreenbutton="false"
+				 data-widget-custombutton="false"
+				 data-widget-collapsed="false"
+				 data-widget-sortable="false">
+
+				<header>
+					<h3 style="margin: 0; padding: 0 0 0 10px;">Position</h3>
+				</header>
+				<div>
+					<div class="widget-body">
+						<canvas id="polarChart" height="120"></canvas>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+
+	<!-- end row -->
+
+</section>
+<!-- end widget grid -->
+
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		pageSetUp();
+
+		var randomScalingFactor = function () {
+			return Math.round(Math.random() * 100);
+			//return 0;
+		};
+		var randomColorFactor = function () {
+			return Math.round(Math.random() * 255);
+		};
+		var randomColor = function (opacity) {
+			return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
+		};
+
+		var LineConfig = {
+			type: 'line',
+			data: {
+				labels: ["January", "February", "March", "April", "May", "June", "July"],
+				datasets: [{
+					label: "My First dataset",
+					data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
+
+				}, {
+					label: "My Second dataset",
+					data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
+				}]
+			},
+			options: {
+				responsive: true,
+				tooltips: {
+					mode: 'label'
+				},
+				hover: {
+					mode: 'dataset'
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							show: true,
+							labelString: 'Month'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							show: true,
+							labelString: 'Value'
+						},
+						ticks: {
+							suggestedMin: 0,
+							suggestedMax: 100,
+						}
+					}]
+				}
+			}
+		};
+
+		$.each(LineConfig.data.datasets, function (i, dataset) {
+			dataset.borderColor = 'rgba(0,0,0,0.15)';
+			dataset.backgroundColor = randomColor(0.5);
+			dataset.pointBorderColor = 'rgba(0,0,0,0.15)';
+			dataset.pointBackgroundColor = randomColor(0.5);
+			dataset.pointBorderWidth = 1;
+		});
+
+		// bar chart example
+
+		var barChartData = {
+			labels: ["January", "February", "March", "April", "May", "June", "July", "August"],
+			datasets: [{
+				label: 'Pass',
+				backgroundColor: "rgba(70,191,189,0.5)",
+				data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+			}, {
+				label: 'Fail',
+				backgroundColor: "rgba(255,31,34,0.5)",
+				data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+			}],
+
+		};
+
+		// radar example
+
+		var RadarConfig = {
+			type: 'radar',
+			data: {
+				labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+				datasets: [{
+					label: "My First dataset",
+					backgroundColor: "rgba(220,220,220,0.2)",
+					pointBackgroundColor: "rgba(220,220,220,1)",
+					data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+				}, {
+					label: "My Second dataset",
+					backgroundColor: "rgba(151,187,205,0.2)",
+					pointBackgroundColor: "rgba(151,187,205,1)",
+					hoverPointBackgroundColor: "#fff",
+					pointHighlightStroke: "rgba(151,187,205,1)",
+					data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+				}, ]
+			},
+			options: {
+				title: {
+					display: true,
+					text: ''
+				},
+				legend: {
+					position: 'top',
+				},
+
+				scale: {
+					reverse: false,
+					ticks: {
+						beginAtZero: true
+					}
+				}
+			}
+		};
+
+		// doughnut example
+
+		var DoughtnutConfig = {
+			type: 'doughnut',
+			data: {
+				datasets: [{
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
+					backgroundColor: [
+						"#F7464A",
+						"#46BFBD",
+						"#FDB45C",
+						"#949FB1",
+						"#4D5360",
+					],
+					label: 'Dataset 1'
+				}],
+				labels: [
+					".Net",
+					"Ruby",
+					"Python",
+					"Java",
+					"PHP"
+				]
+			},
+			options: {
+				title: {
+					display: true,
+					text: ''
+				},
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var allData = data.datasets[tooltipItem.datasetIndex].data;
+							var tooltipLabel = data.labels[tooltipItem.index];
+							var tooltipData = allData[tooltipItem.index];
+							var total = 0;
+							for (var i in allData) {
+								total += allData[i];
+							}
+							var tooltipPercentage = Math.round((tooltipData / total) * 100);
+							return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+						}
+					}
+				}
+			}
+		};
+
+		// polar chart example
+
+		var PolarConfig = {
+			data: {
+				datasets: [{
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+					],
+					backgroundColor: [
+						"#F7464A",
+						"#46BFBD",
+						"#FDB45C",
+						"#949FB1",
+						"#4D5360",
+					],
+					label: 'My dataset' // for legend
+				}],
+				labels: [
+					"Brse",
+					"PM",
+					"Dev",
+					"QA"
+				]
+			},
+			options: {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: ''
+				},
+				scale: {
+					ticks: {
+						beginAtZero: true
+					},
+					reverse: false
+				},
+				animateRotate: false,
+				tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var allData = data.datasets[tooltipItem.datasetIndex].data;
+							var tooltipLabel = data.labels[tooltipItem.index];
+							var tooltipData = allData[tooltipItem.index];
+							var total = 0;
+							for (var i in allData) {
+								total += allData[i];
+							}
+							var tooltipPercentage = Math.round((tooltipData / total) * 100);
+							return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+						}
+					}
+				}
+			}
+		};
+
+		// pie chart example
+		var PieConfig = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+					],
+					backgroundColor: [
+						"#F7464A",
+						"#46BFBD",
+						"#FDB45C",
+						"#949FB1",
+					],
+				}],
+				labels: [
+					"New",
+					"Rviewing",
+					"Pass",
+					"Fail"
+				]
+			},
+			options: {
+				showAllTooltips: true,
+				plugins: {
+					labels: {
+						value: 'percentage',
+						position: 'outside'
+					}
+				},
+				title: {
+					display: true,
+					text: ''
+				},
+				responsive: true,
+				tooltips: {
+					enabled: true,
+					position: 'average',
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var allData = data.datasets[tooltipItem.datasetIndex].data;
+							var tooltipLabel = data.labels[tooltipItem.index];
+							var tooltipData = allData[tooltipItem.index];
+							var total = 0;
+							for (var i in allData) {
+								total += allData[i];
+							}
+							var tooltipPercentage = Math.round((tooltipData / total) * 100);
+							return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+						}
+					}
+				}
+			}
+		};
+
+		window.onload = function () {
+			window.myBar = new Chart(document.getElementById("barChart"), {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'CV by Month'
+					}
+				}
+			});
+			window.myDoughnut = new Chart(document.getElementById("doughnutChart"), DoughtnutConfig);
+			window.myPie = new Chart(document.getElementById("pieChart"), PieConfig);
+			window.myPolarArea = Chart.PolarArea(document.getElementById("polarChart"), PolarConfig);
+		};
+
+	})
+
+</script>

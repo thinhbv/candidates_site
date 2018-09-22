@@ -9,12 +9,20 @@ namespace CMSSolutions.Websites.Entities
     
     
     [DataContract()]
-    public class Positions : BaseEntity<int>
+    public class ScheduleInterview : BaseEntity<int>
     {
         
         [DataMember()]
-        [DisplayName("pos_name")]
-        public string pos_name { get; set; }
+        [DisplayName("pos_id")]
+        public int pos_id { get; set; }
+        
+        [DataMember()]
+        [DisplayName("candidate_id")]
+        public int candidate_id { get; set; }
+        
+        [DataMember()]
+        [DisplayName("interview_date")]
+        public System.DateTime interview_date { get; set; }
         
         [DataMember()]
         [DisplayName("created_date")]
@@ -23,31 +31,19 @@ namespace CMSSolutions.Websites.Entities
         [DataMember()]
         [DisplayName("updated_date")]
         public System.Nullable<System.DateTime> updated_date { get; set; }
-
-		[DataMember()]
-		[DisplayName("content")]
-		public string content { get; set; }
-
-		[DataMember()]
-		[DisplayName("start_date")]
-		public DateTime start_date { get; set; }
-
-		[DataMember()]
-		[DisplayName("end_date")]
-		public DateTime end_date { get; set; }
     }
     
-    public class PositionsMapping : EntityTypeConfiguration<Positions>, IEntityTypeConfiguration
+    public class ScheduleInterviewMapping : EntityTypeConfiguration<ScheduleInterview>, IEntityTypeConfiguration
     {
         
-        public PositionsMapping()
+        public ScheduleInterviewMapping()
         {
-            this.ToTable("Module_Positions");
+            this.ToTable("Module_ScheduleInterview");
             this.HasKey(m => m.Id);
-            this.Property(m => m.pos_name).IsRequired().HasMaxLength(250);
+            this.Property(m => m.pos_id).IsRequired();
+            this.Property(m => m.candidate_id).IsRequired();
+            this.Property(m => m.interview_date).IsRequired();
             this.Property(m => m.created_date).IsRequired();
-			this.Property(m => m.start_date).IsRequired();
-			this.Property(m => m.end_date).IsRequired();
             this.Property(m => m.updated_date);
         }
     }

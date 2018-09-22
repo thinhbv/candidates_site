@@ -18,6 +18,7 @@
 	using CMSSolutions.Web.Security.Services;
 	using CMSSolutions.Websites.Extensions;
 	using System.Web;
+	using System.Text;
     
     
     [Authorize()]
@@ -52,6 +53,13 @@
             result.GridWrapperEndHtml = CMSSolutions.Constants.Grid.GridWrapperEndHtml;
             result.ClientId = TableName;
 
+			result.AddCustomVar(Extensions.Constants.LanguageId, "$('#" + Extensions.Constants.LanguageId + "').val();", true);
+			result.AddCustomVar(Extensions.Constants.LevelId, "$('#" + Extensions.Constants.LevelId + "').val();", true);
+			result.AddCustomVar(Extensions.Constants.Status, "$('#" + Extensions.Constants.Status + "').val();", true);
+			result.AddCustomVar(Extensions.Constants.FromDate, "$('#" + Extensions.Constants.FromDate + "').val();", true);
+			result.AddCustomVar(Extensions.Constants.ToDate, "$('#" + Extensions.Constants.ToDate + "').val();", true);
+			result.AddCustomVar(Extensions.Constants.Keyword, "$('#" + Extensions.Constants.Keyword + "').val();", true);
+
             result.AddColumn(x => x.Id, T("ID")).HasWidth(60);
 			result.AddColumn(x => x.full_name, T("Full Name"));
 			result.AddColumn(x => x.mail_address, T("Email"));
@@ -62,10 +70,19 @@
 				.HasWidth(100)
 				.RenderAsStatusImage();
 
-            result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(CMSSolutions.Constants.RowLeft).HasRow(true);
+			result.AddAction().HasText(this.T("Create"))
+				.HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary)
+				.HasCssClass(CMSSolutions.Constants.RowLeft).HasBoxButton(true).HasRow(true);
+
+			result.AddAction(new ControlFormHtmlAction(BuildSearchText)).HasParentClass(CMSSolutions.Constants.ContainerCssClassCol3);
+			result.AddAction(new ControlFormHtmlAction(() => BuildLanguages())).HasParentClass(CMSSolutions.Constants.ContainerCssClassCol3);
+			result.AddAction(new ControlFormHtmlAction(() => BuildLevels())).HasParentClass(CMSSolutions.Constants.ContainerCssClassCol3);
+			result.AddAction(new ControlFormHtmlAction(() => BuildCandiateStatus())).HasParentClass(CMSSolutions.Constants.ContainerCssClassCol3);
+			result.AddAction(new ControlFormHtmlAction(() => BuildFromDate())).HasParentClass(CMSSolutions.Constants.ContainerCssClassCol3);
+			result.AddAction(new ControlFormHtmlAction(() => BuildToDate())).HasParentClass(CMSSolutions.Constants.ContainerCssClassCol3);
+
 			result.AddRowAction().HasText(this.T("View CV")).HasUrl(x => Url.Action("CandidateProfile", new { id = x.Id })).HasButtonStyle(ButtonStyle.Info).HasButtonSize(ButtonSize.ExtraSmall);
 			result.AddRowAction().HasText(this.T("Send Mail")).HasUrl(x => Url.Action("SendMail", "MailProcess", new { id = x.Id })).HasButtonStyle(ButtonStyle.Success).HasButtonSize(ButtonSize.ExtraSmall).ShowModalDialog(600, 600);
-;
             result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
 			result.AddRowAction(true).HasText(this.T("Delete")).HasName("Delete").HasValue(x => Convert.ToString(x.Id)).HasButtonStyle(ButtonStyle.Danger).HasButtonSize(ButtonSize.ExtraSmall).HasConfirmMessage(this.T(CMSSolutions.Constants.Messages.ConfirmDeleteRecord));
             
@@ -77,8 +94,50 @@
         
         private ControlGridAjaxData<Candidates> GetModule_Candidates(ControlGridFormRequest options)
         {
+			if (Request.QueryString[Extensions.Constants.PageIndex] != null)
+			{
+				options.PageIndex = int.Parse(Request.QueryString[Extensions.Constants.PageIndex]);
+			}
+
+			var languageId = 0;
+			var levelId = 0;
+			var status = 0;
+			var fromDate = DateTime.Now.Date;
+			var toDate = DateTime.Now.Date;
+			var keyword = string.Empty;
+
+			if (Utilities.IsNotNull(Request.Form[Extensions.Constants.LanguageId]))
+			{
+				languageId = Convert.ToInt32(Request.Form[Extensions.Constants.LanguageId]);
+			}
+
+			if (Utilities.IsNotNull(Request.Form[Extensions.Constants.LevelId]))
+			{
+				levelId = Convert.ToInt32(Request.Form[Extensions.Constants.LevelId]);
+			}
+
+			if (Utilities.IsNotNull(Request.Form[Extensions.Constants.Status]))
+			{
+				status = Convert.ToInt32(Request.Form[Extensions.Constants.Status]);
+			}
+
+			if (Utilities.IsNotNull(Request.Form[Extensions.Constants.FromDate]))
+			{
+				fromDate = DateTime.ParseExact(Request.Form[Extensions.Constants.FromDate], "MM/dd/yyyy", CultureInfo.InvariantCulture);
+			}
+
+			if (Utilities.IsNotNull(Request.Form[Extensions.Constants.ToDate]))
+			{
+				toDate = DateTime.ParseExact(Request.Form[Extensions.Constants.ToDate], "MM/dd/yyyy", CultureInfo.InvariantCulture);
+			}
+
+			if (Utilities.IsNotNull(Request.Form[Extensions.Constants.Keyword]))
+			{
+				keyword = Request.Form[Extensions.Constants.Keyword];
+			}
+
             int totals;
-			var items = this.service.GetRecords(options, out totals, x => x.status == (int)CandidateStatus.Actived);
+			var items = this.service.GetRecords(options, out totals, x => x.status == status);
             var result = new ControlGridAjaxData<Candidates>(items, totals);
             return result;
         }
@@ -312,15 +371,15 @@
         {
 			var text = string.Empty;
             var model = service.GetById(id);
-			if (model.status == (int)CandidateStatus.Actived)
+			if (model.status != (int)CandidateStatus.Blocked)
 			{
 				model.status = (int)CandidateStatus.Blocked;
 				text = T("Block success.");
 			}
 			else
 			{
-				model.status = (int)CandidateStatus.Actived;
-				text = T("Active success.");
+				model.status = (int)CandidateStatus.New;
+				text = T("Activated success.");
 			}
             service.Update(model);
 

@@ -3,9 +3,17 @@ namespace CMSSolutions.Websites.Extensions
 {
     public class Constants
     {
+		public const string PageIndex = "PageIndex";
 		public const string CandidateId = "CandidateId";
 		public const string Template = "template";
 		public const string MailBody = "mail_body";
+		public const string LanguageId = "language_id";
+		public const string LevelId = "level_id";
+		public const string Status = "status";
+		public const string FromDate = "from_date";
+		public const string ToDate = "to_date";
+		public const string Keyword = "keyword";
+		public const string ReturnUrl = "returnUrl";
 
 		public const string IsNull = "null";
 		public const string IsUndefined = "undefined";

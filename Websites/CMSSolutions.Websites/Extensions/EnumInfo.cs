@@ -17,10 +17,19 @@ namespace CMSSolutions.Websites.Extensions
 
 	public enum CandidateStatus
 	{
-		[Display(Name = "Actived")]
-		Actived=0,
+		[Display(Name = "New")]
+		New = 0,
 
 		[Display(Name = "Blocked")]
-		Blocked=1
+		Blocked=1,
+
+		[Display(Name = "Interviewing")]
+		Interview = 2,
+
+		[Display(Name = "Pass")]
+		Pass = 3,
+
+		[Display(Name = "Failed")]
+		Failed = 4,
 	}
 }

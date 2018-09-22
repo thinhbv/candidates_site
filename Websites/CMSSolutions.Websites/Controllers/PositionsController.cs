@@ -28,17 +28,17 @@
                 base(workContextAccessor)
         {
             this.service = service;
-            this.TableName = "tblPositions";
+			this.TableName = "tblRecruitments";
         }
-        
-        [Url("admin/positions")]
+
+		[Url("admin/recruitments")]
         public ActionResult Index()
         {
-            WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Positions"), Url = "#" });
+			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Recruitments"), Url = "#" });
             var result = new ControlGridFormResult<Positions>();
             var siteSettings = WorkContext.Resolve<SiteSettings>();
 
-            result.Title = this.T("Position List");
+			result.Title = this.T("Recruitment List");
             result.CssClass = "table table-bordered table-striped";
             result.UpdateActionName = "Update";
             result.IsAjaxSupported = true;
@@ -50,11 +50,11 @@
             result.ClientId = TableName;
 			result.ActionsColumnWidth = 150;
 
-			result.AddColumn(x => x.pos_name, T("Position Name"));
+			result.AddColumn(x => x.pos_name, T("Recruitment Position"));
             result.AddColumn(x => x.created_date, T("Created Date"));
 
-			result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(Constants.RowLeft).HasRow(true).ShowModalDialog();
-			result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall).ShowModalDialog();
+			result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(Constants.RowLeft).HasRow(true);
+			result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
             result.AddRowAction(true).HasText(this.T("Delete")).HasName("Delete").HasValue(x => Convert.ToString(x.Id)).HasButtonStyle(ButtonStyle.Danger).HasButtonSize(ButtonSize.ExtraSmall).HasConfirmMessage(this.T(Constants.Messages.ConfirmDeleteRecord));
             
 			result.AddReloadEvent("UPDATE_ENTITY_COMPLETE");
@@ -70,17 +70,18 @@
             return result;
         }
 
-		[Themed(false)]
-        [Url("admin/positions/edit/{id}")]
+		[Url("admin/recruitments/edit/{id}")]
         public ActionResult Edit(int id)
         {
-			var title = T("Create Position");
+			var title = T("Create Recruitment Information");
             var model = new PositionsModel();
             if (id > 0)
             {
 				 model = this.service.GetById(id);
             }
-			title = T("Edit Position");
+			title = T("Edit Recruitment Information");
+			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Recruitments"), Url = Url.Action("Index") });
+			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = title, Url = "#" });
 
 			var result = new ControlFormResult<PositionsModel>(model)
             {
@@ -100,7 +101,7 @@
         [HttpPost()]
         [FormButton("Save")]
         [ValidateInput(false)]
-        [Url("admin/positions/update")]
+		[Url("admin/recruitments/update")]
         public ActionResult Update(PositionsModel model)
         {
             if (!ModelState.IsValid)
@@ -128,7 +129,7 @@
 			item.end_date = model.end_date;
             service.Save(item);
 
-			return new AjaxResult().NotifyMessage("UPDATE_ENTITY_COMPLETE").Alert(text).CloseModalDialog();
+			return new AjaxResult().NotifyMessage("UPDATE_ENTITY_COMPLETE").Alert(text);
         }
         
         [ActionName("Update")]

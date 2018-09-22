@@ -40,7 +40,7 @@ namespace CMSSolutions.Websites.Menus
 				.Action("Index", "Languages", new { area = "" })
 				.Permission(LanguagesPermissions.ManagerLanguages));
 
-			builder.Add(T("Positions"), "1", b => b
+			builder.Add(T("Recruitments"), "1", b => b
 				.Action("Index", "Positions", new { area = "" })
 				.Permission(PositionsPermissions.ManagerPositions));
 

@@ -64,7 +64,8 @@
 
             result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(CMSSolutions.Constants.RowLeft).HasRow(true);
 			result.AddRowAction().HasText(this.T("View CV")).HasUrl(x => Url.Action("CandidateProfile", new { id = x.Id })).HasButtonStyle(ButtonStyle.Info).HasButtonSize(ButtonSize.ExtraSmall);
-			result.AddRowAction().HasText(this.T("Send Mail")).HasUrl(x => Url.Action("SendMail", new { id = x.Id })).HasButtonStyle(ButtonStyle.Success).HasButtonSize(ButtonSize.ExtraSmall);
+			result.AddRowAction().HasText(this.T("Send Mail")).HasUrl(x => Url.Action("SendMail", "MailProcess", new { id = x.Id })).HasButtonStyle(ButtonStyle.Success).HasButtonSize(ButtonSize.ExtraSmall).ShowModalDialog(600, 600);
+;
             result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
 			result.AddRowAction(true).HasText(this.T("Delete")).HasName("Delete").HasValue(x => Convert.ToString(x.Id)).HasButtonStyle(ButtonStyle.Danger).HasButtonSize(ButtonSize.ExtraSmall).HasConfirmMessage(this.T(CMSSolutions.Constants.Messages.ConfirmDeleteRecord));
             
@@ -176,26 +177,6 @@
 			model.Data = item.cv_path;
 
 			return View("ViewProfile", model);
-		}
-
-		[Themed(false)]
-		[Url("admin/candidates/send-mail/{id}")]
-		public ActionResult SendMail(int id)
-		{
-			var model = new MailModel();
-			var result = new ControlFormResult<MailModel>(model)
-			{
-				Title = T("Send Mail Recruitment"),
-				FormMethod = FormMethod.Post,
-				UpdateActionName = "Update",
-				SubmitButtonText = T("Save"),
-				CancelButtonText = T("Close"),
-				ShowBoxHeader = false,
-				FormWrapperStartHtml = CMSSolutions.Constants.Form.FormWrapperStartHtml,
-				FormWrapperEndHtml = CMSSolutions.Constants.Form.FormWrapperEndHtml
-			};
-
-			return result;
 		}
 
 		private ControlGridAjaxData<LevelCandidates> GetModule_LevelCandidates(ControlGridFormRequest options)
@@ -324,7 +305,7 @@
 				return new AjaxResult().NotifyMessage("UPDATE_ENTITY_COMPLETE").Alert(text);
 			}
         }
-        
+
         [ActionName("Update")]
         [FormButton("Delete")]
         public ActionResult Delete(int id)

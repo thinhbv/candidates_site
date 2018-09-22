@@ -236,6 +236,7 @@
     <Compile Include="Controllers\LevelsController.cs" />
     <Compile Include="Controllers\MailTemplatesController.cs" />
     <Compile Include="Controllers\PositionsController.cs" />
+    <Compile Include="Controllers\MailProcessController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\ScheduleInterviewController.cs" />
     <Compile Include="Controllers\StakeholderController.cs" />

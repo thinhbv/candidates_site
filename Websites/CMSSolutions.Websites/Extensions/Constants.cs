@@ -4,6 +4,8 @@ namespace CMSSolutions.Websites.Extensions
     public class Constants
     {
 		public const string CandidateId = "CandidateId";
+		public const string Template = "template";
+		public const string MailBody = "mail_body";
 
 		public const string IsNull = "null";
 		public const string IsUndefined = "undefined";
@@ -21,5 +23,6 @@ namespace CMSSolutions.Websites.Extensions
 		public const string DateCustomCss = "date-control-cust";
 
 		public static string HRRoleId = ConfigurationManager.AppSettings["HR_ROLE_ID"];
+		public static string InterviewRoleId = ConfigurationManager.AppSettings["INTERVIEW_ROLE_ID"];
     }
 }

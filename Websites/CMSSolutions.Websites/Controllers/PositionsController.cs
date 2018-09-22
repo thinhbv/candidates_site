@@ -51,7 +51,8 @@
 			result.ActionsColumnWidth = 150;
 
 			result.AddColumn(x => x.pos_name, T("Recruitment Position"));
-            result.AddColumn(x => x.created_date, T("Created Date"));
+            result.AddColumn(x => x.start_date, T("Start Date"));
+			result.AddColumn(x => x.end_date, T("End Date"));
 
 			result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(Constants.RowLeft).HasRow(true);
 			result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
@@ -89,7 +90,7 @@
                 FormMethod = FormMethod.Post,
                 UpdateActionName = "Update",
                 SubmitButtonText = T("Save"),
-                CancelButtonText = T("Close"),
+                CancelButtonText = T("Cancel"),
                 ShowBoxHeader = false,
                 FormWrapperStartHtml = Constants.Form.FormWrapperStartHtml,
                 FormWrapperEndHtml = Constants.Form.FormWrapperEndHtml

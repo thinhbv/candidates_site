@@ -51,6 +51,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libs\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="CMSSolutions, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\CMSSolutions.dll</HintPath>
+    </Reference>
     <Reference Include="CMSSolutions.Accounts, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libs\CMSSolutions.Accounts.dll</HintPath>
@@ -1338,12 +1342,6 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\V1.0.0.0.pubxml" />
     <Content Include="Views\Candidates\ViewProfile.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\CMS1.0.1.0\CMSSolutions\CMSSolutions.csproj">
-      <Project>{b9c43589-644e-4a95-b0db-5f6d66c4d8a3}</Project>
-      <Name>CMSSolutions</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

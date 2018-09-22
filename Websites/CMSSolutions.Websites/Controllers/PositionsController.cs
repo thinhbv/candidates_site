@@ -123,6 +123,9 @@
             }
 
             item.pos_name = model.pos_name;
+			item.content = model.content;
+			item.start_date = model.start_date;
+			item.end_date = model.end_date;
             service.Save(item);
 
 			return new AjaxResult().NotifyMessage("UPDATE_ENTITY_COMPLETE").Alert(text).CloseModalDialog();

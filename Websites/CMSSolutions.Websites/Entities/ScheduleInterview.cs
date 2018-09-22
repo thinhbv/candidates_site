@@ -31,6 +31,10 @@ namespace CMSSolutions.Websites.Entities
         [DataMember()]
         [DisplayName("updated_date")]
         public System.Nullable<System.DateTime> updated_date { get; set; }
+		
+		[DataMember()]
+		[DisplayName("list_questions")]
+		public string list_questions { get; set; }
     }
     
     public class ScheduleInterviewMapping : EntityTypeConfiguration<ScheduleInterview>, IEntityTypeConfiguration
@@ -44,6 +48,7 @@ namespace CMSSolutions.Websites.Entities
             this.Property(m => m.candidate_id).IsRequired();
             this.Property(m => m.interview_date).IsRequired();
             this.Property(m => m.created_date).IsRequired();
+			this.Property(m => m.list_questions).IsRequired();
             this.Property(m => m.updated_date);
         }
     }

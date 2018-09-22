@@ -25,7 +25,19 @@ namespace CMSSolutions.Websites.Models
         
         [ControlDatePicker(LabelText="updated_date", Required=false, ContainerCssClass=Constants.ContainerCssClassCol3, ContainerRowIndex=0)]
         public System.Nullable<System.DateTime> updated_date { get; set; }
-        
+
+		[ControlText(Type = ControlText.TextBox, Required = false, MaxLength = 250, ContainerCssClass = Constants.ContainerCssClassCol6, ContainerRowIndex = 0)]
+		public string list_questions { get; set; }
+
+		[ControlNumeric(LabelText = "candidate_id", Required = true, ContainerCssClass = Constants.ContainerCssClassCol3, ContainerRowIndex = 0)]
+		public int interviewers_id { get; set; }
+
+		[ControlDatePicker(LabelText = "start_date", Required = false, ContainerCssClass = Constants.ContainerCssClassCol3, ContainerRowIndex = 0)]
+		public int start_date { get; set; }
+
+		[ControlDatePicker(LabelText = "end_date", Required = false, ContainerCssClass = Constants.ContainerCssClassCol3, ContainerRowIndex = 0)]
+		public int end_date { get; set; }
+
         public static implicit operator ScheduleInterviewModel(ScheduleInterview entity)
         {
             return new ScheduleInterviewModel

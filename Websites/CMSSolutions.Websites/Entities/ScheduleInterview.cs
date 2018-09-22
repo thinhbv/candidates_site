@@ -35,6 +35,18 @@ namespace CMSSolutions.Websites.Entities
 		[DataMember()]
 		[DisplayName("list_questions")]
 		public string list_questions { get; set; }
+
+		[DataMember()]
+		[DisplayName("interviewers_id")]
+		public int interviewers_id { get; set; }
+
+		[DataMember()]
+		[DisplayName("start_date")]
+		public DateTime start_date { get; set; }
+
+		[DataMember()]
+		[DisplayName("end_date")]
+		public DateTime end_date { get; set; }
     }
     
     public class ScheduleInterviewMapping : EntityTypeConfiguration<ScheduleInterview>, IEntityTypeConfiguration
@@ -49,6 +61,9 @@ namespace CMSSolutions.Websites.Entities
             this.Property(m => m.interview_date).IsRequired();
             this.Property(m => m.created_date).IsRequired();
 			this.Property(m => m.list_questions).IsRequired();
+			this.Property(m => m.interviewers_id).IsRequired();
+			this.Property(m => m.start_date).IsRequired();
+			this.Property(m => m.end_date).IsRequired();
             this.Property(m => m.updated_date);
         }
     }

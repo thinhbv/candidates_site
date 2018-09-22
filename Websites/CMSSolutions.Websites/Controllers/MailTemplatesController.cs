@@ -19,7 +19,7 @@ namespace CMSSolutions.Websites.Controllers
     
     [Authorize()]
     [Themed(IsDashboard=true)]
-    public class MailTemplatesController : BaseController
+	public class MailTemplatesController : BaseAdminController
     {
         
         private readonly IMailTemplatesService service;

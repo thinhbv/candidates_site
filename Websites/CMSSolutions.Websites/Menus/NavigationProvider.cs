@@ -83,8 +83,8 @@ namespace CMSSolutions.Websites.Menus
 				.Permission(CandidatesPermissions.ManagerCandidates));
 
 			builder.Add(T("Summary Report"), "0", b => b
-				.Action("Index", "Candidates", new { area = "" })
-				.Permission(CandidatesPermissions.ManagerCandidates));
+				.Action("Index", "Report", new { area = "" })
+				.Permission(AdminPermissions.ManagerReports));
 		}
     }
 }

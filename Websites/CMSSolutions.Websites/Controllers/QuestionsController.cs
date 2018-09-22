@@ -19,7 +19,7 @@ namespace CMSSolutions.Websites.Controllers
     
     [Authorize()]
     [Themed(IsDashboard=true)]
-    public class QuestionsController : BaseController
+	public class QuestionsController : BaseAdminController
     {
         
         private readonly IQuestionsService service;

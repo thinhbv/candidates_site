@@ -36,7 +36,9 @@
         public ActionResult Index()
         {
             WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Schedule Interviews"), Url = "#" });
-            
+
+			ViewBag.Title = T("Schedule Interviews");
+
             return View();
         }
         

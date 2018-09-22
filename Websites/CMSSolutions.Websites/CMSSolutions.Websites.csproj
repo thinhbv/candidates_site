@@ -254,7 +254,6 @@
     <Compile Include="Controllers\CandidatesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\HttpPost.cs" />
     <Compile Include="Controllers\InterviewController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\LevelCandidatesController.cs" />
@@ -263,6 +262,7 @@
     <Compile Include="Controllers\PositionsController.cs" />
     <Compile Include="Controllers\MailProcessController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ScheduleInterviewController.cs" />
     <Compile Include="Controllers\StakeholderController.cs" />
     <Compile Include="Entities\Candidates.cs" />
@@ -1856,6 +1856,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

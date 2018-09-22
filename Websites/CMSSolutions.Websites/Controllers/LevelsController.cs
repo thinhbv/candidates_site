@@ -19,7 +19,7 @@ namespace CMSSolutions.Websites.Controllers
     
     [Authorize()]
     [Themed(IsDashboard=true)]
-    public class LevelsController : BaseController
+	public class LevelsController : BaseAdminController
     {
         
         private readonly ILevelsService service;

@@ -6,6 +6,15 @@ using System.Web;
 
 namespace CMSSolutions.Websites.Extensions
 {
+	public enum Round
+	{
+		[Display(Name = "Round 1")]
+		Round1 = 1,
+
+		[Display(Name = "Round 2")]
+		Round2 = 2
+	}
+
 	public enum LevelType
 	{
 		[Display(Name = "Skill")]

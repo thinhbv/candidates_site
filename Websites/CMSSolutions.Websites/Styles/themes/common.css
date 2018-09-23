@@ -88,3 +88,6 @@ label {
 	margin-right: 3px !important;
     width: 93% !important;
 }
+#left-panel nav a{
+	font-size: 13px;
+}

@@ -252,7 +252,9 @@
   <ItemGroup>
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\CandidatesController.cs" />
-    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\DashboardEmployeeController.cs" />
+    <Compile Include="Controllers\DashboardInterviewController.cs" />
+    <Compile Include="Controllers\DashboardCandidateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\InterviewController.cs" />
@@ -260,12 +262,15 @@
     <Compile Include="Controllers\LevelCandidatesController.cs" />
     <Compile Include="Controllers\LevelsController.cs" />
     <Compile Include="Controllers\MailTemplatesController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\PositionsController.cs" />
     <Compile Include="Controllers\MailProcessController.cs" />
+    <Compile Include="Controllers\ProjectsAssignmentController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ScheduleInterviewController.cs" />
     <Compile Include="Controllers\StakeholderController.cs" />
+    <Compile Include="Controllers\SyncDataController.cs" />
     <Compile Include="Entities\Candidates.cs" />
     <Compile Include="Entities\Interview.cs" />
     <Compile Include="Entities\Languages.cs" />
@@ -301,6 +306,7 @@
     <Compile Include="Models\StakeholderModel.cs" />
     <Compile Include="Permissions\AdminPermissions.cs" />
     <Compile Include="Permissions\CandidatesPermissions.cs" />
+    <Compile Include="Permissions\EmployeePermissions.cs" />
     <Compile Include="Permissions\InterviewPermissions.cs" />
     <Compile Include="Permissions\LanguagesPermissions.cs" />
     <Compile Include="Permissions\LevelCandidatesPermissions.cs" />
@@ -1858,7 +1864,12 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Report\Index.cshtml" />
-    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\DashboardCandidate\Index.cshtml" />
+    <Content Include="Views\DashboardInterview\Index.cshtml" />
+    <Content Include="Views\DashboardEmployee\Index.cshtml" />
+    <Content Include="Views\SyncData\Index.cshtml" />
+    <Content Include="Views\ProjectsAssignment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

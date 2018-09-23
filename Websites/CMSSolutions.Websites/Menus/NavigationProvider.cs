@@ -16,18 +16,10 @@ namespace CMSSolutions.Websites.Menus
         public void GetNavigation(NavigationBuilder builder)
         {
 			builder.Add(T("Dashboard"), "0", BuildHomeMenu);
-			builder.Add(T("Interview Schedules"), "1", b => b
-				.Action("Index", "ScheduleInterview", new { area = "" })
-				.IconCssClass("fa-calendar")
-				.Permission(ScheduleInterviewPermissions.ManagerScheduleInterview));
-			builder.Add(T("Administration"), "2", BuildMaster);
-			builder.Add(T("Recruitment"), "3", BuildRecruitment);
-			builder.Add(T("Interview"), "4", BuildInterview);
-			builder.Add(T("Employee"), "5", BuildEmployee);
-			builder.Add(T("Interview Reports"), "5", b => b
-				.Action("Index", "Report", new { area = "" })
-				.IconCssClass("fa-bar-chart-o")
-				.Permission(AdminPermissions.ManagerReports));
+			builder.Add(T("Administration"), "1", BuildMaster);
+			builder.Add(T("Recruitment Management"), "2", BuildRecruitment);
+			builder.Add(T("Interview Management"), "3", BuildInterview);
+			builder.Add(T("Employee Management"), "4", BuildEmployee);
         }
 
         private void BuildHomeMenu(NavigationItemBuilder builder)
@@ -61,12 +53,15 @@ namespace CMSSolutions.Websites.Menus
 		{
 			builder.IconCssClass("fa-building");
 
-			builder.Add(T("Recruitment Notice"), "0", b => b
+			builder.Add(T("Dashboard"), "0", b => b
+				.Action("Index", "DashboardCandidate", new { area = "" })
+				.Permission(AdminPermissions.ManagerDashboardCandidate));
+
+			builder.Add(T("Recruitment Notice"), "1", b => b
 				.Action("Index", "Positions", new { area = "" })
 				.Permission(PositionsPermissions.ManagerPositions));
 
-
-			builder.Add(T("Candidate List"), "1", b => b
+			builder.Add(T("Candidate List"), "2", b => b
 				.Action("Index", "Candidates", new { area = "" })
 				.Permission(CandidatesPermissions.ManagerCandidates));
 		}
@@ -75,22 +70,46 @@ namespace CMSSolutions.Websites.Menus
 		{
 			builder.IconCssClass("fa-desktop");
 
-			builder.Add(T("Interview List"), "1", b => b
+			builder.Add(T("Dashboard"), "0", b => b
+				.Action("Index", "DashboardInterview", new { area = "" })
+				.Permission(AdminPermissions.ManagerDashboardInterview));
+
+			builder.Add(T("Interview Schedules"), "1", b => b
+				.Action("Index", "ScheduleInterview", new { area = "" })
+				.Permission(ScheduleInterviewPermissions.ManagerScheduleInterview));
+
+			builder.Add(T("Interview List"), "2", b => b
 				.Action("Index", "Interview", new { area = "" })
 				.Permission(InterviewPermissions.ManagerInterview));
 
-			builder.Add(T("Questions"), "2", b => b
+			builder.Add(T("Questions"), "3", b => b
 				.Action("Index", "Questions", new { area = "" })
 				.Permission(QuestionsPermissions.ManagerQuestions));
+
+			builder.Add(T("Interview Reports"), "4", b => b
+				.Action("Index", "Report", new { area = "" })
+				.Permission(AdminPermissions.ManagerReports));
 		}
 
 		private void BuildEmployee(NavigationItemBuilder builder)
 		{
 			builder.IconCssClass("fa-group");
 
+			builder.Add(T("Dashboard"), "0", b => b
+				.Action("Index", "DashboardEmployee", new { area = "" })
+				.Permission(AdminPermissions.ManagerDashboardEmployee));
+
+			builder.Add(T("Sync Data Portal"), "1", b => b
+				.Action("Index", "SyncData", new { area = "" })
+				.Permission(AdminPermissions.ManagerSyncData));
+
 			builder.Add(T("Employee List"), "2", b => b
-				.Action("Index", "EmployeeController", new { area = "" })
-				.Permission(AdminPermissions.ManagerEmployees));
+				.Action("Index", "Employees", new { area = "" })
+				.Permission(EmployeePermissions.ManagerEmployees));
+
+			builder.Add(T("Projects Assignment"), "3", b => b
+				.Action("Index", "ProjectsAssignment", new { area = "" })
+				.Permission(AdminPermissions.ManagerProjectsAssignment));
 		}
     }
 }

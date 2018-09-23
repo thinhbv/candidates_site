@@ -20,16 +20,50 @@ namespace CMSSolutions.Websites.Permissions
 			Description = "Manager Reports",
 		};
 
-		public static readonly Permission ManagerEmployees = new Permission
+		public static readonly Permission ManagerDashboardCandidate = new Permission
+        {
+			Name = "ManagerDashboardCandidate",
+            Category = "Management",
+			Description = "Candidate Dashboard"
+        };
+
+		public static readonly Permission ManagerDashboardInterview = new Permission
+        {
+			Name = "ManagerDashboardInterview",
+            Category = "Management",
+			Description = "Dashboard Interview"
+        };
+
+		public static readonly Permission ManagerDashboardEmployee = new Permission
 		{
-			Name = "ManagerEmployees",
+			Name = "ManagerDashboardEmployee",
 			Category = "Management",
-			Description = "Manager Employees",
+			Description = "Dashboard Employee"
+		};
+
+		public static readonly Permission ManagerSyncData = new Permission
+		{
+			Name = "ManagerSyncData",
+			Category = "Management",
+			Description = "Sync Data"
+		};
+
+		public static readonly Permission ManagerProjectsAssignment = new Permission
+		{
+			Name = "ManagerProjectsAssignment",
+			Category = "Management",
+			Description = "ProjectsAssignment"
 		};
 
         public IEnumerable<Permission> GetPermissions()
         {
             yield return ManagerAdmin;
+			yield return ManagerReports;
+			yield return ManagerDashboardCandidate;
+			yield return ManagerDashboardInterview;
+			yield return ManagerDashboardEmployee;
+			yield return ManagerSyncData;
+			yield return ManagerProjectsAssignment;
         }
     }
 }

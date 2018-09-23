@@ -1,4 +1,5 @@
-﻿using System;
+﻿namespace CMSSolutions.Websites.Controllers
+{
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -14,29 +15,26 @@
     using CMSSolutions.Web;
     using CMSSolutions.Web.UI.Navigation;
     using CMSSolutions.Web.Routing;
-	using CMSSolutions.Extensions;
-	using CMSSolutions.Websites.Extensions;
-
-namespace CMSSolutions.Websites.Controllers
-{
-	[Authorize()]
-	[Themed(IsDashboard = true)]
-	public class EmployeeController : BaseAdminController
+    
+    
+    [Authorize()]
+    [Themed(IsDashboard=true)]
+	public class EmployeesController : BaseAdminController
     {
-		public EmployeeController(IWorkContextAccessor workContextAccessor) : 
+		public EmployeesController(IWorkContextAccessor workContextAccessor) : 
                 base(workContextAccessor)
         {
-            this.TableName = "tblEmployee";
+			this.TableName = "tblEmployees";
         }
 
-		[Url("admin/employee")]
+		[Url("admin/employees")]
 		public ActionResult Index()
-        {
+		{
 			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Employees"), Url = "#" });
 
-			ViewBag.Title = T("Employee List");
+			ViewBag.Title = T("Employees");
 
-            return View("Index");
-        }
+			return View();
+		}
     }
 }

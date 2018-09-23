@@ -23,8 +23,8 @@
     {
         
         private readonly IPositionsService service;
-        
-        public PositionsController(IWorkContextAccessor workContextAccessor, IPositionsService service) : 
+
+		public PositionsController(IWorkContextAccessor workContextAccessor, IPositionsService service) : 
                 base(workContextAccessor)
         {
             this.service = service;

@@ -6,6 +6,7 @@ namespace CMSSolutions.Websites.Entities
     using CMSSolutions.Data;
     using CMSSolutions.Data.Entity;
     using System.Runtime.Serialization;
+	using System.ComponentModel.DataAnnotations.Schema;
     
     
     [DataContract()]
@@ -23,6 +24,10 @@ namespace CMSSolutions.Websites.Entities
         [DataMember()]
         [DisplayName("position_id")]
         public int position_id { get; set; }
+
+		[NotMapped]
+		[DisplayName("position_name")]
+		public string position_name { get; set; }
         
         [DataMember()]
         [DisplayName("interview_date_plan")]
@@ -35,6 +40,10 @@ namespace CMSSolutions.Websites.Entities
         [DataMember()]
         [DisplayName("interviewer_id")]
         public int interviewer_id { get; set; }
+
+		[NotMapped]
+		[DisplayName("interviewer_name")]
+		public string interviewer_name { get; set; }
         
         [DataMember()]
         [DisplayName("evaluation")]

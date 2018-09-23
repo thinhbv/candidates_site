@@ -60,15 +60,9 @@
 			result.AddCustomVar(Extensions.Constants.ToDate, "$('#" + Extensions.Constants.ToDate + "').val();", true);
 			result.AddCustomVar(Extensions.Constants.Keyword, "$('#" + Extensions.Constants.Keyword + "').val();", true);
 
-            result.AddColumn(x => x.Id, T("ID")).HasWidth(60);
 			result.AddColumn(x => x.full_name, T("Full Name"));
 			result.AddColumn(x => x.mail_address, T("Email"));
 			result.AddColumn(x => x.phone_number, T("Phone Number"));
-			result.AddColumn(x => x.is_employee)
-				.HasHeaderText(T("Is Employed"))
-				.AlignCenter()
-				.HasWidth(100)
-				.RenderAsStatusImage();
 
 			result.AddAction().HasText(this.T("Create"))
 				.HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary)

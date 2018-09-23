@@ -89,5 +89,8 @@ label {
     width: 93% !important;
 }
 #left-panel nav a{
-	font-size: 13px;
+	font-size: 13px !important;
+}
+#left-panel nav < ul li a {
+	padding: 10px 5px 10px 5px !important;
 }

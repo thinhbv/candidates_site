@@ -57,11 +57,11 @@ namespace CMSSolutions.Websites.Menus
 				.Action("Index", "DashboardCandidate", new { area = "" })
 				.Permission(AdminPermissions.ManagerDashboardCandidate));
 
-			builder.Add(T("Recruitment Notice"), "1", b => b
+			builder.Add(T("Recruitment Requests"), "1", b => b
 				.Action("Index", "Positions", new { area = "" })
 				.Permission(PositionsPermissions.ManagerPositions));
 
-			builder.Add(T("Candidate List"), "2", b => b
+			builder.Add(T("Candidate Management"), "2", b => b
 				.Action("Index", "Candidates", new { area = "" })
 				.Permission(CandidatesPermissions.ManagerCandidates));
 		}
@@ -74,19 +74,23 @@ namespace CMSSolutions.Websites.Menus
 				.Action("Index", "DashboardInterview", new { area = "" })
 				.Permission(AdminPermissions.ManagerDashboardInterview));
 
-			builder.Add(T("Interview Schedules"), "1", b => b
+			builder.Add(T("Interview Requests"), "1", b => b
+				.Action("Index", "InterviewRequests", new { area = "" })
+				.Permission(AdminPermissions.ManagerInterviewRequests));
+
+			builder.Add(T("Interview Schedules"), "2", b => b
 				.Action("Index", "ScheduleInterview", new { area = "" })
 				.Permission(ScheduleInterviewPermissions.ManagerScheduleInterview));
 
-			builder.Add(T("Interview List"), "2", b => b
+			builder.Add(T("Interview List"), "3", b => b
 				.Action("Index", "Interview", new { area = "" })
 				.Permission(InterviewPermissions.ManagerInterview));
 
-			builder.Add(T("Questions"), "3", b => b
+			builder.Add(T("Questions"), "4", b => b
 				.Action("Index", "Questions", new { area = "" })
 				.Permission(QuestionsPermissions.ManagerQuestions));
 
-			builder.Add(T("Interview Reports"), "4", b => b
+			builder.Add(T("Interview Reports"), "5", b => b
 				.Action("Index", "Report", new { area = "" })
 				.Permission(AdminPermissions.ManagerReports));
 		}

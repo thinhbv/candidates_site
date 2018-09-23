@@ -55,6 +55,13 @@ namespace CMSSolutions.Websites.Permissions
 			Description = "ProjectsAssignment"
 		};
 
+		public static readonly Permission ManagerInterviewRequests = new Permission
+		{
+			Name = "ManagerInterviewRequests",
+			Category = "Management",
+			Description = "Interview Requests"
+		};
+
         public IEnumerable<Permission> GetPermissions()
         {
             yield return ManagerAdmin;

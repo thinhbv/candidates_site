@@ -258,6 +258,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\InterviewController.cs" />
+    <Compile Include="Controllers\InterviewRequestsController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\LevelCandidatesController.cs" />
     <Compile Include="Controllers\LevelsController.cs" />
@@ -1870,6 +1871,7 @@
     <Content Include="Views\DashboardEmployee\Index.cshtml" />
     <Content Include="Views\SyncData\Index.cshtml" />
     <Content Include="Views\ProjectsAssignment\Index.cshtml" />
+    <Content Include="Views\InterviewRequests\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

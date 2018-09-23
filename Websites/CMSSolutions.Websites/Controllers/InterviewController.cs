@@ -1,4 +1,4 @@
-namespace CMSSolutions.Websites.Controllers
+﻿namespace CMSSolutions.Websites.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -48,16 +48,16 @@ namespace CMSSolutions.Websites.Controllers
             result.GridWrapperEndHtml = Constants.Grid.GridWrapperEndHtml;
             result.ClientId = TableName;
 
-            result.AddColumn(x => x.Id);
-            result.AddColumn(x => x.candidate_id);
-            result.AddColumn(x => x.round_id);
-            result.AddColumn(x => x.position_id);
-            result.AddColumn(x => x.interview_date_plan);
-            result.AddColumn(x => x.interview_date);
-            result.AddColumn(x => x.interviewer_id);
-            result.AddColumn(x => x.evaluation);
-            result.AddColumn(x => x.status);
-            result.AddColumn(x => x.interview_result);
+            //result.AddColumn(x => x.Id);
+            result.AddColumn(x => x.candidate_id, T("Candidate Name"));
+            //result.AddColumn(x => x.round_id);
+			result.AddColumn(x => x.position_id, T("Position"));
+            //result.AddColumn(x => x.interview_date_plan);
+			result.AddColumn(x => x.interview_date, T("Interviewed Date"));
+            result.AddColumn(x => x.interviewer_name, T("Interviewer"));
+            //result.AddColumn(x => x.evaluation);
+			result.AddColumn(x => x.status, T("Status"));
+			result.AddColumn(x => x.interview_result, T("Interview Result"));
 
             result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(Constants.RowLeft).HasRow(true);
             result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
@@ -75,17 +75,25 @@ namespace CMSSolutions.Websites.Controllers
             var result = new ControlGridAjaxData<Interview>(items, totals);
             return result;
         }
-        
-        [Url("admin/interviews/edit/{id}")]
+
+		[Url("admin/interviews/edit/{id}")]
         public ActionResult Edit(int id)
         {
+			int candiate_id = int.Parse(Request.QueryString["candidateId"]);
             WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Interview"), Url = "#" });
             WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Interviews"), Url = Url.Action("Index") });
-            var model = new InterviewModel();
+			var model = new InterviewModel();
+			var candidate = new CandidatesModel();
             if (id > 0)
             {
 				 model = this.service.GetById(id);
             }
+			if (candiate_id > 0)
+			{
+				var canService = WorkContext.Resolve<ICandidatesService>();
+				candidate = canService.GetById(candiate_id);
+				model.candidate_name = candidate.full_name;
+			}
             var result = new ControlFormResult<InterviewModel>(model);
             result.Title = this.T("Edit Interview");
             result.FormMethod = FormMethod.Post;
@@ -95,7 +103,7 @@ namespace CMSSolutions.Websites.Controllers
             result.FormWrapperStartHtml = Constants.Form.FormWrapperStartHtml;
             result.FormWrapperEndHtml = Constants.Form.FormWrapperEndHtml;
             result.AddAction().HasText(this.T("Clear")).HasUrl(this.Url.Action("Edit", RouteData.Values.Merge(new { id = 0 }))).HasButtonStyle(ButtonStyle.Success);
-            result.AddAction().HasText(this.T("Back")).HasUrl(this.Url.Action("Index")).HasButtonStyle(ButtonStyle.Danger);
+            result.AddAction().HasText(this.T("Back")).HasUrl(this.Url.Action("Index","Candidates")).HasButtonStyle(ButtonStyle.Danger);
             return result;
         }
         
@@ -122,15 +130,15 @@ namespace CMSSolutions.Websites.Controllers
             item.round_id = model.round_id;
             item.position_id = model.position_id;
             item.interview_date_plan = model.interview_date_plan;
-            item.interview_date = model.interview_date;
+			item.interview_date = DateTime.Now;
             item.interviewer_id = model.interviewer_id;
             item.evaluation = model.evaluation;
             item.status = model.status;
             item.interview_result = model.interview_result;
-            item.created_date = model.created_date;
-            item.created_user_id = model.created_user_id;
-            item.updated_date = model.updated_date;
-            item.updated_user_id = model.updated_user_id;
+            item.created_date = DateTime.Now;
+            item.created_user_id = WorkContext.CurrentUser.Id;
+			item.updated_date = DateTime.Now;
+			item.updated_user_id = WorkContext.CurrentUser.Id;
             service.Save(item);
 			return new AjaxResult().NotifyMessage("UPDATE_ENTITY_COMPLETE");
         }

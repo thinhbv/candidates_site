@@ -16,6 +16,7 @@
     using CMSSolutions.Web.UI.Navigation;
     using CMSSolutions.Web.Routing;
 	using CMSSolutions.Web.Security.Services;
+	using System.Text;
     
     
     [Authorize()]
@@ -35,8 +36,48 @@
         [Url("admin/scheduleinterviews")]
         public ActionResult Index()
         {
+			StringBuilder strXML = new StringBuilder();
             WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Schedule Interviews"), Url = "#" });
+			var serviceSchedule = WorkContext.Resolve<IScheduleInterviewService>();
+			var list = serviceSchedule.GetRecords(x => x.end_date > DateTime.Now);
+			strXML.AppendLine("{");
+			strXML.AppendLine("  \"data\": [");
+			for (int i = 0; i < list.Count; i++)
+			{
+				string scheduleXML = string.Empty;
+				int[] arr = ConvertStringToArrayInt(list[i].list_questions);
+				var service = WorkContext.Resolve<IQuestionsService>();
+				StringBuilder strQuest = new StringBuilder();
+				if (arr != null)
+				{
+					var model = service.GetRecords(x => arr.Contains(x.Id));
 
+					for (int j = 0; j < model.Count; j++)
+					{
+						if (j == model.Count - 1)
+						{
+							strQuest.Append(model[j].content);
+						}
+						else
+						{
+							strQuest.Append(model[j].content + "\\n");
+						}
+					}
+				}
+				if (i == list.Count - 1)
+				{
+					scheduleXML = "      {\"id\":\"" + list[i].Id.ToString() + "\"," + "\"start_date\":\"" + list[i].start_date.ToString("yyyy:MM:dd HH:mm:ss") + "\"," + "\"end_date\":\"" + list[i].end_date.ToString("yyyy:MM:dd HH:mm:ss") + "\"," + "\"text\":\"" + list[i].name + "\"," + "\"level_id\":\"" + list[i].pos_id.ToString() + "\"," + "\"lang_id\":\"" + list[i].pos_id.ToString() + "\"," + "\"can_id\":\"" + list[i].candidate_id.ToString() + "\"," + "\"user_id\":\"" + list[i].interviewers_id + "\"," + "\"quest_id\":\"" + strQuest.ToString() + "\"}";
+				}
+				else
+				{
+					scheduleXML = "      {\"id\":\"" + list[i].Id.ToString() + "\"," + "\"start_date\":\"" + list[i].start_date.ToString("yyyy:MM:dd HH:mm:ss") + "\"," + "\"end_date\":\"" + list[i].end_date.ToString("yyyy:MM:dd HH:mm:ss") + "\"," + "\"text\":\"" + list[i].name + "\"," + "\"level_id\":\"" + list[i].pos_id.ToString() + "\"," + "\"lang_id\":\"" + list[i].pos_id.ToString() + "\"," + "\"can_id\":\"" + list[i].candidate_id.ToString() + "\"," + "\"user_id\":\"" + list[i].interviewers_id + "\"," + "\"quest_id\":\"" + strQuest.ToString() + "\"},";
+				}
+				strXML.AppendLine(scheduleXML);
+			}
+			strXML.AppendLine("    ]");
+			strXML.AppendLine("}");
+			System.IO.File.WriteAllBytes(Server.MapPath("/") + "/Media/common/events.json", new byte[0]);
+			System.IO.File.WriteAllText(Server.MapPath("/") + "/Media/common/events.json", strXML.ToString(), System.Text.Encoding.UTF8);
 			ViewBag.Title = T("Schedule Interviews");
 
             return View();
@@ -112,58 +153,92 @@
 
 		[HttpPost, ValidateInput(false)]
 		[Url("admin/save-schedule")]
-		public ActionResult Save(int[] interviewid, int candidateid, int levelid, string startdate, string enddate, int langid, string title)
+		public ActionResult Save(long id, string interviewid, int candidateid, int levelid, string startdate, string enddate, string langid, string title)
 		{
 			var service = WorkContext.Resolve<IQuestionsService>();
 			var serviceSchedule = WorkContext.Resolve<IScheduleInterviewService>();
 			var memberSV = WorkContext.Resolve<IMembershipService>();
 			var serviceCandidate = WorkContext.Resolve<ICandidatesService>();
-			var list = service.GetRecords(x => x.language_id == langid && x.level_id == levelid);
+			int[] arrLang = ConvertStringToArrayInt(langid);
 			string listQuestionId = string.Empty;
+			if (arrLang != null)
+			{
+				string tmp = levelid.ToString();
+				var list = service.GetRecords(x => arrLang.Contains(x.language_id) && x.types.Contains(tmp));
+				for (int i = 0; i < list.Count; i++)
+				{
+					listQuestionId = listQuestionId + list[i].Id.ToString() + ",";
+				}
+				if (!string.IsNullOrEmpty(listQuestionId))
+				{
+					listQuestionId = listQuestionId.Substring(0, listQuestionId.Length - 1);
+				}
+			}
+			int[] arr = ConvertStringToArrayInt(interviewid);
 
-			for (int i = 0; i < list.Count; i++)
-			{
-				listQuestionId = listQuestionId + list[i] + ",";
-			}
-			if (!string.IsNullOrEmpty(listQuestionId))
-			{
-				listQuestionId = listQuestionId.Substring(0, listQuestionId.Length - 1);
-			}
 			startdate = startdate.Substring(0, startdate.IndexOf(" GMT"));
 			enddate = enddate.Substring(0, enddate.IndexOf(" GMT"));
 			ScheduleInterview item = new ScheduleInterview();
+			item = serviceSchedule.GetById(id);
+			if (item == null)
+			{
+				item = new ScheduleInterview();
+			}
 			item.name = title;
 			item.pos_id = levelid;
+			item.lang_id = langid;
 			item.candidate_id = candidateid;
-			item.interviewers_id = string.Join(",", interviewid);
+			item.interviewers_id = interviewid;
 			item.interview_date = DateTime.Now;
 			item.start_date = DateTime.Parse(startdate);
 			item.end_date = DateTime.Parse(enddate);
 			item.list_questions = listQuestionId;
 			item.created_date = DateTime.Now;
 			item.updated_date = DateTime.Now;
-			serviceSchedule.Insert(item);
-			var model = new DataViewModel();
-			model.Status = true;
+			serviceSchedule.Save(item);
 			MailTemplates mailTemp = new MailTemplates();
 			mailTemp.name = "【Lịch phỏng vấn】" + title;
 			mailTemp.url_template = "/Media/Default/UploadFiles/JobTemplate.html";
 			var body = System.IO.File.ReadAllText(Server.MapPath(string.Format("~{0}", mailTemp.url_template)));
 			var candidate = serviceCandidate.GetById(candidateid);
-			var reviewer = memberSV.GetRecords(x => interviewid.Contains(x.Id));
+
 			string mailTo = string.Empty;
 			if (candidate != null)
 			{
 				 mailTo = candidate.mail_address;
 			}
-			for (int i = 0; i < reviewer.Count; i++)
+			if (arr != null)
 			{
-				mailTo = "," + mailTo + reviewer[i].Email; 
+				var reviewer = memberSV.GetRecords(x => arr.Contains(x.Id));
+
+				for (int i = 0; i < reviewer.Count; i++)
+				{
+					mailTo = "," + mailTo + reviewer[i].Email;
+				}
 			}
 			if (!string.IsNullOrEmpty(mailTo))
 			{
+				if (mailTo.StartsWith(","))
+				{
+					mailTo = mailTo.Substring(1);
+				}
 				SendEmail(mailTemp.name, body, mailTo, GetListToBCC());
 			}
+			var model = new DataViewModel();
+			model.Status = true;
+			return Json(model.Status);
+		}
+
+		[HttpPost, ValidateInput(false)]
+		[Url("admin/delete-schedule")]
+		public ActionResult Deleted(int scheduleid)
+		{
+			var serviceSchedule = WorkContext.Resolve<IScheduleInterviewService>();
+			string listQuestionId = string.Empty;
+			var item = serviceSchedule.GetById(scheduleid);
+			serviceSchedule.Delete(item);
+			var model = new DataViewModel();
+			model.Status = true;
 			return Json(model.Status);
 		}
     }

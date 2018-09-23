@@ -11,14 +11,14 @@ namespace CMSSolutions.Websites.Services
     using CMSSolutions.Data;
     
     
-    public interface IScheduleInterviewService : IGenericService<ScheduleInterview, int>, IDependency
+    public interface IScheduleInterviewService : IGenericService<ScheduleInterview, long>, IDependency
     {
     }
-    
-    public class ScheduleInterviewService : GenericService<ScheduleInterview, int>, IScheduleInterviewService
+
+	public class ScheduleInterviewService : GenericService<ScheduleInterview, long>, IScheduleInterviewService
     {
-        
-        public ScheduleInterviewService(IEventBus eventBus, IRepository<ScheduleInterview, int> repository) : 
+
+		public ScheduleInterviewService(IEventBus eventBus, IRepository<ScheduleInterview, long> repository) : 
                 base(repository, eventBus)
         {
         }

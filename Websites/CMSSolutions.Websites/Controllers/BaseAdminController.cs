@@ -203,5 +203,20 @@ namespace CMSSolutions.Websites.Controllers
 			listBCC = string.Join(",", listUsers.Select(x => x.Email));
 			return listBCC;
 		}
+
+		public int[] ConvertStringToArrayInt(string sConvert)
+		{
+			if (string.IsNullOrEmpty(sConvert))
+			{
+				return null;
+			}
+			string[] tmp = sConvert.Split(Char.Parse(","));
+			var arr = new int[tmp.Length];
+			for (int i = 0; i < tmp.Length; i++)
+			{
+				arr[i] = int.Parse(tmp[i]);
+			}
+			return arr;
+		}
     }
 }

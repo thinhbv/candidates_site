@@ -1,6 +1,6 @@
 ﻿<script src="/Scripts/codebase/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
 <script src="/Scripts/codebase/ext/dhtmlxscheduler_year_view.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="/Scripts/codebase/dhtmlxscheduler_material.css" type="text/css" charset="utf-8">
+<script src="/Scripts/codebase/ext/dhtmlxscheduler_multiselect.js" type="text/javascript" charset="utf-8"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
@@ -32,30 +32,36 @@
 	function init() {
 
 		scheduler.config.xml_date = "%Y-%m-%d %H:%i";
-		scheduler.config.first_hour = 8;
+		scheduler.config.prevent_cache = true;
+		scheduler.config.first_hour = 4;
 		scheduler.config.limit_time_select = true;
 		scheduler.config.details_on_create = true;
-		scheduler.config.details_on_dblclick = true;		scheduler.load("/Media/common/events.json", "json", function () {
-			//scheduler.showLightbox(2);
+		scheduler.config.details_on_dblclick = true;
+		scheduler.load("/Media/common/events.json", "json", function () {
+			
 		});
 		scheduler.init('scheduler_here', new Date(2018, 9, 22), "month");
-		scheduler.locale.labels.section_description = "Title";		scheduler.config.lightbox.sections = [
+		//scheduler.locale.labels.section_description = "Title";
+
+		scheduler.config.lightbox.sections = [
 		{
 			name: "Title", height: 40, type: "textarea", map_to: "text", focus: true
 		},
 		{
 			name: "Position", height: 40, type: "select", map_to: "level_id", options: [
-			{ key: 1, label: "Junior" },
-			{ key: 2, label: "Senior" },
-			{ key: 3, label: "PM" },
-			{ key: 4, label: "BrSE" }]
+			{ key: 1, label: "Develop" },
+			{ key: 2, label: "QA" },
+			{ key: 3, label: "Teach Lead" },
+			{ key: 4, label: "Team Lead" },
+			{ key: 5, label: "PM" },
+			{ key: 6, label: "BrSE" }]
 		},
 		{
-			name: "Language", height: 40, type: "select", map_to: "lang_id", options: [
+			name: "Languages", height: 40, type: "multiselect", map_to: "lang_id", options: [
 			{ key: 1, label: ".Net" },
 			{ key: 2, label: "Java" },
 			{ key: 3, label: "Ruby" },
-			{ key: 4, label: "Python" }]
+			{ key: 4, label: "Python" }], vertical: "false"
 		},
 		{
 			name: "Candidate", height: 40, type: "select", map_to: "can_id", options: [
@@ -65,13 +71,17 @@
 			{ key: 4, label: "Nguyễn Quang Hải" }]
 		},
 		{
-			name: "Interviewer", type: "select", height: 40, map_to: "user_id", options: [
+			name: "Interviewer", type: "multiselect", height: 40, map_to: "user_id", options: [
 		{ key: 1, label: "Vương Văn Hùng" },
-		{ key: 2, label: "Bùi Văn Thịnh" }]
+		{ key: 2, label: "Bùi Văn Thịnh" }], vertical: "false"
 		},
-		{ name: "time", height: 72, type: "time", map_to: "auto" }
+		{ name: "time", height: 72, type: "time", map_to: "auto" },
+		{
+			name: "Question", type: "textarea", height: 140, map_to: "quest_id"
+		}
 		];
-		var holder2 = scheduler.getLabel("unit_id", 2);// ->"John Williams"		scheduler.attachEvent("onEventSave", function (id, ev) {
+		var holder2 = scheduler.getLabel("unit_id", 2);// ->"John Williams"
+		scheduler.attachEvent("onEventSave", function (id, ev) {
 			//if (!ev.text) {
 			//	return false;
 			//}
@@ -82,20 +92,27 @@
 			var levelid = ev.level_id;
 			var startdate = ev.start_date;
 			var enddate = ev.end_date;
-			//var time = scheduler.formSection('time');
-			//var descr = scheduler.formSection('description');
-
-			////gets the value
-			//var value = time.getValue();
-			//var value1 = descr.getValue();
-
-			////sets the value
-			//descr.setValue('abc'); //for sections that contain the only control
-			//time.setValue(null, { start_date: new Date(2009, 03, 10), end_date: new Date(2012, 03, 10) });
 			$.ajax({
 				type: 'POST',
 				url: '@Url.Action("Save", "ScheduleInterview")',
-				data: { interviewid: interviewid, candidateid: candidateid, levelid: levelid, startdate: startdate, enddate: enddate, langid: langid, title:title },
+				data: { id:id, interviewid: interviewid, candidateid: candidateid, levelid: levelid, startdate: startdate, enddate: enddate, langid: langid, title: title },
+				dataType: 'JSON',
+				success: function (data) {
+				}
+			});
+			return true;
+		})
+
+		
+		scheduler.attachEvent("onEventDeleted", function (id, ev) {
+			//if (!ev.text) {
+			//	return false;
+			//}
+
+			$.ajax({
+				type: 'POST',
+				url: '@Url.Action("Deleted", "ScheduleInterview")',
+				data: { scheduleid: id },
 				dataType: 'JSON',
 				success: function (data) {
 
@@ -113,7 +130,7 @@
 	}
 
 	.container-fluid #scheduler_here {
-		height: 700px;
+		height: 900px;
 		width: 100%;
 		border: 1px solid #cecece;
 	}
@@ -121,6 +138,17 @@
 	#scheduler_here {
 		border-radius: 4px;
 	}
+	.dhx_multi_select_userselect input {
+			vertical-align: middle !important;
+		}
+
+		.dhx_multi_select_fruitselect input {
+			vertical-align: middle !important;
+		}
+		label {
+			width: auto !important; 
+			font-weight:normal !important;
+		}
 </style>
 
 

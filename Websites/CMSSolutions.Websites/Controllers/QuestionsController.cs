@@ -15,6 +15,8 @@ namespace CMSSolutions.Websites.Controllers
     using CMSSolutions.Web;
     using CMSSolutions.Web.UI.Navigation;
     using CMSSolutions.Web.Routing;
+	using CMSSolutions.Extensions;
+	using CMSSolutions.Websites.Extensions;
     
     
     [Authorize()]
@@ -44,28 +46,56 @@ namespace CMSSolutions.Websites.Controllers
             result.DefaultPageSize = siteSettings.DefaultPageSize;
             result.EnablePaginate = true;
             result.FetchAjaxSource = this.GetModule_Questions;
-            result.GridWrapperStartHtml = Constants.Grid.GridWrapperStartHtml;
-            result.GridWrapperEndHtml = Constants.Grid.GridWrapperEndHtml;
+            result.GridWrapperStartHtml = CMSSolutions.Constants.Grid.GridWrapperStartHtml;
+			result.GridWrapperEndHtml = CMSSolutions.Constants.Grid.GridWrapperEndHtml;
             result.ClientId = TableName;
-            result.AddColumn(x => x.Id);
-            result.AddColumn(x => x.language_id);
-            result.AddColumn(x => x.content);
-            result.AddColumn(x => x.creator);
-            result.AddColumn(x => x.created_date);
-            result.AddColumn(x => x.updated_date);
-            result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(Constants.RowLeft).HasRow(true);
+			result.AddColumn(x => x.language_name, T("Language"));
+			result.AddColumn(x => x.type_name, T("Position"));
+            result.AddColumn(x => x.content, T("Content Question"));
+			result.AddAction().HasText(this.T("Create")).HasUrl(this.Url.Action("Edit", new { id = 0 })).HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false).HasCssClass(CMSSolutions.Constants.RowLeft).HasRow(true);
             result.AddRowAction().HasText(this.T("Edit")).HasUrl(x => Url.Action("Edit", new { id = x.Id })).HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
-            result.AddRowAction(true).HasText(this.T("Delete")).HasName("Delete").HasValue(x => Convert.ToString(x.Id)).HasButtonStyle(ButtonStyle.Danger).HasButtonSize(ButtonSize.ExtraSmall).HasConfirmMessage(this.T(Constants.Messages.ConfirmDeleteRecord));
+			result.AddRowAction(true).HasText(this.T("Delete")).HasName("Delete").HasValue(x => Convert.ToString(x.Id)).HasButtonStyle(ButtonStyle.Danger).HasButtonSize(ButtonSize.ExtraSmall).HasConfirmMessage(this.T(CMSSolutions.Constants.Messages.ConfirmDeleteRecord));
             result.AddReloadEvent("UPDATE_ENTITY_COMPLETE");
             result.AddReloadEvent("DELETE_ENTITY_COMPLETE");
             return result;
         }
-        
+
+		private string DisplayNamePosition(string types)
+		{
+			string strReturn = string.Empty;
+			string[] tmp;
+			if (types.Contains(","))
+			{
+				tmp = types.Split(Char.Parse(","));
+			}
+			else
+			{
+				tmp = new string[] { types };
+			}
+			for (int i = 0; i < tmp.Length; i++)
+			{
+				int iTemp = int.Parse(tmp[i]);
+				strReturn = strReturn + EnumExtensions.GetDisplayName((PositionType)iTemp) + ",";
+			}
+			if (!string.IsNullOrEmpty(strReturn))
+			{
+				strReturn = strReturn.Substring(0, strReturn.Length - 1);
+			}
+			return strReturn;
+		}
+
         private ControlGridAjaxData<Questions> GetModule_Questions(ControlGridFormRequest options)
         {
             int totals;
             var items = this.service.GetRecords(options, out totals);
             var result = new ControlGridAjaxData<Questions>(items, totals);
+			foreach (var item in result)
+			{
+				item.type_name = DisplayNamePosition(item.types);
+				var service = WorkContext.Resolve<ILanguagesService>();
+				var record = service.GetById(item.language_id);
+				item.language_name = record.name;
+			}
             return result;
         }
         
@@ -85,13 +115,34 @@ namespace CMSSolutions.Websites.Controllers
             result.UpdateActionName = "Update";
             result.ShowCancelButton = false;
             result.ShowBoxHeader = false;
-            result.FormWrapperStartHtml = Constants.Form.FormWrapperStartHtml;
-            result.FormWrapperEndHtml = Constants.Form.FormWrapperEndHtml;
+			result.FormWrapperStartHtml = CMSSolutions.Constants.Form.FormWrapperStartHtml;
+			result.FormWrapperEndHtml = CMSSolutions.Constants.Form.FormWrapperEndHtml;
+			result.RegisterExternalDataSource(x => x.language_id, y => BindLanguageList());
+			result.RegisterExternalDataSource(x => x.types, y => EnumExtensions.GetListItems<Websites.Extensions.PositionType>());
             result.AddAction().HasText(this.T("Clear")).HasUrl(this.Url.Action("Edit", RouteData.Values.Merge(new { id = 0 }))).HasButtonStyle(ButtonStyle.Success);
             result.AddAction().HasText(this.T("Back")).HasUrl(this.Url.Action("Index")).HasButtonStyle(ButtonStyle.Danger);
             return result;
         }
-        
+
+		private IEnumerable<SelectListItem> BindLanguageList()
+		{
+			var service = WorkContext.Resolve<ILanguagesService>();
+			var items = service.GetRecords();
+			var result = new List<SelectListItem>();
+			if (items != null)
+			{
+				result.AddRange(items.Select(item => new SelectListItem
+				{
+					Text = item.name,
+					Value = item.Id.ToString(),
+					Selected = false
+				}));
+			}
+
+			return result;
+		}
+
+
         [HttpPost()]
         [FormButton("Save")]
         [ValidateInput(false)]
@@ -100,8 +151,10 @@ namespace CMSSolutions.Websites.Controllers
         {
             if (!ModelState.IsValid)
             {
-				return new AjaxResult().Alert(T(Constants.Messages.InvalidModel));
+				return new AjaxResult().Alert(T(CMSSolutions.Constants.Messages.InvalidModel));
             }
+
+			var text = "Create success";
             Questions item;
             if (model.Id == 0)
             {
@@ -110,14 +163,16 @@ namespace CMSSolutions.Websites.Controllers
             else
             {
                 item = service.GetById(model.Id);
+				text = "Update success.";
             }
             item.language_id = model.language_id;
             item.content = model.content;
-            item.creator = model.creator;
-            item.created_date = model.created_date;
-            item.updated_date = model.updated_date;
+            item.creator = WorkContext.CurrentUser.Id;
+			item.types = string.Join(",", model.types);
+            item.created_date = DateTime.Now;
+			item.updated_date = DateTime.Now;
             service.Save(item);
-			return new AjaxResult().NotifyMessage("UPDATE_ENTITY_COMPLETE");
+			return new AjaxResult().NotifyMessage("UPDATE_ENTITY_COMPLETE").Alert(text);
         }
         
         [ActionName("Update")]

@@ -9,7 +9,7 @@ namespace CMSSolutions.Websites.Entities
     
     
     [DataContract()]
-    public class ScheduleInterview : BaseEntity<int>
+    public class ScheduleInterview : BaseEntity<long>
     {
 		[DataMember()]
 		[DisplayName("name")]
@@ -22,6 +22,10 @@ namespace CMSSolutions.Websites.Entities
         [DataMember()]
         [DisplayName("candidate_id")]
         public int candidate_id { get; set; }
+
+		[DataMember()]
+		[DisplayName("lang_id")]
+		public string lang_id { get; set; }
         
         [DataMember()]
         [DisplayName("interview_date")]

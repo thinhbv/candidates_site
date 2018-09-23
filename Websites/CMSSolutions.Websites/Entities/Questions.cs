@@ -6,6 +6,7 @@ namespace CMSSolutions.Websites.Entities
     using CMSSolutions.Data;
     using CMSSolutions.Data.Entity;
     using System.Runtime.Serialization;
+	using System.ComponentModel.DataAnnotations.Schema;
     
     
     [DataContract()]
@@ -17,12 +18,24 @@ namespace CMSSolutions.Websites.Entities
 		public int level_id { get; set; }
 
         [DataMember()]
-        [DisplayName("language_id")]
+		[DisplayName("language_id")]
         public int language_id { get; set; }
+
+		[NotMapped]
+		[DisplayName("language_name")]
+		public string language_name { get; set; }
         
         [DataMember()]
-        [DisplayName("content")]
+		[DisplayName("content")]
         public string content { get; set; }
+
+		[DataMember()]
+		[DisplayName("types")]
+		public string types { get; set; }
+
+		[NotMapped]
+		[DisplayName("type_name")]
+		public string type_name { get; set; }
         
         [DataMember()]
         [DisplayName("creator")]

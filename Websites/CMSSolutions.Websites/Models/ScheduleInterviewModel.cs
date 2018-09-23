@@ -9,7 +9,7 @@ namespace CMSSolutions.Websites.Models
     {
         
         [ControlHidden()]
-        public int Id { get; set; }
+		public long Id { get; set; }
 
 
 		[ControlNumeric(LabelText = "name", Required = true, ContainerCssClass = Constants.ContainerCssClassCol3, ContainerRowIndex = 0)]

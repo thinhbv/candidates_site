@@ -229,23 +229,24 @@
 				result3.ClientId = "tblInterviewHistories";
 				result3.ActionsColumnWidth = 130;
 
-				//result3.AddColumn(x => x.created_date, T("Start Date"));
-				//result3.AddColumn(x => x.level_name, T("Level"));
-				//result3.AddColumn(x => x.month, T("Experience(month)"));
-				//result3.AddColumn(x => x.is_main)
-				//	.HasHeaderText(T("Main Skill"))
-				//	.AlignCenter()
-				//	.HasWidth(100)
-				//	.RenderAsStatusImage();
+				result3.AddColumn(x => x.candidate_id, T("Candidate Name"));
+				result3.AddColumn(x => x.round_id, T("Round Name"));
+				result3.AddColumn(x => x.position_id, T("Position"));
+				//result3.AddColumn(x => x.interview_date_plan);
+				result3.AddColumn(x => x.interview_date, T("Interviewed Date"));
+				result3.AddColumn(x => x.interviewer_id, T("Interviewer"));
+				//result3.AddColumn(x => x.evaluation);
+				result3.AddColumn(x => x.status, T("Status"));
+				result3.AddColumn(x => x.interview_result, T("Interview Result"));
 
 				result3.AddAction().HasText(this.T("Create"))
-					.HasUrl(this.Url.Action("Edit", "LevelCandidates", new { id = 0, candidateId = id }))
+					.HasUrl(this.Url.Action("Edit", "Interview", new { id = 0, candidateId = id }))
 					.HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false)
-					.HasCssClass(CMSSolutions.Constants.RowLeft).HasRow(true).ShowModalDialog(600, 600);
+					.HasCssClass(CMSSolutions.Constants.RowLeft).HasRow(true);
 
 				result3.AddRowAction().HasText(this.T("Edit"))
-					.HasUrl(x => Url.Action("Edit", "LevelCandidates", new { id = x.Id, candidateId = id }))
-					.HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall).ShowModalDialog(600, 600);
+					.HasUrl(x => Url.Action("Edit", "Interview", new { id = x.Id, candidateId = id }))
+					.HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall);
 
 				result3.AddRowAction(true)
 					.HasText(T("Delete"))
@@ -258,7 +259,7 @@
 				result3.AddCustomVar(Extensions.Constants.CandidateId, id);
 				result3.AddReloadEvent("DELETE_ENTITY_COMPLETE");
 
-				return new ControlFormsResult(result, result2);
+				return new ControlFormsResult(result, result2, result3);
 			}
 
 			return result;

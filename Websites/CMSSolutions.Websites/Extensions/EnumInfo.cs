@@ -41,4 +41,28 @@ namespace CMSSolutions.Websites.Extensions
 		[Display(Name = "Failed")]
 		Failed = 4,
 	}
+
+	public enum PositionType
+	{
+		[Display(Name = "Develop")]
+		Develop = 0,
+
+		[Display(Name = "QA")]
+		QA = 1,
+
+		[Display(Name = "Tech Lead")]
+		TechLead = 2,
+
+		[Display(Name = "Team Lead")]
+		TeamLead = 3,
+
+		[Display(Name = "BrSE")]
+		BrSE = 4,
+
+		[Display(Name = "PM")]
+		PM = 5,
+
+		[Display(Name = "Other")]
+		Other = 5,
+	}
 }

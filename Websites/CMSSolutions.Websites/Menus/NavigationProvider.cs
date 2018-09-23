@@ -15,14 +15,19 @@ namespace CMSSolutions.Websites.Menus
 
         public void GetNavigation(NavigationBuilder builder)
         {
-            builder.Add(T("Home"), "0", BuildHomeMenu);
-			builder.Add(T("Administration"), "1", BuildMaster);
-			builder.Add(T("Schedule Interview"), "2", b => b
+			builder.Add(T("Dashboard"), "0", BuildHomeMenu);
+			builder.Add(T("Interview Schedules"), "1", b => b
 				.Action("Index", "ScheduleInterview", new { area = "" })
 				.IconCssClass("fa-calendar")
 				.Permission(ScheduleInterviewPermissions.ManagerScheduleInterview));
-			builder.Add(T("Interview"), "3", BuildRecruitment);
-			builder.Add(T("Reports"), "4", BuildReport);
+			builder.Add(T("Administration"), "2", BuildMaster);
+			builder.Add(T("Recruitment"), "3", BuildRecruitment);
+			builder.Add(T("Interview"), "4", BuildInterview);
+			builder.Add(T("Employee"), "5", BuildEmployee);
+			builder.Add(T("Interview Reports"), "5", b => b
+				.Action("Index", "Report", new { area = "" })
+				.IconCssClass("fa-bar-chart-o")
+				.Permission(AdminPermissions.ManagerReports));
         }
 
         private void BuildHomeMenu(NavigationItemBuilder builder)
@@ -40,10 +45,6 @@ namespace CMSSolutions.Websites.Menus
 				.Action("Index", "Languages", new { area = "" })
 				.Permission(LanguagesPermissions.ManagerLanguages));
 
-			builder.Add(T("Recruitments"), "1", b => b
-				.Action("Index", "Positions", new { area = "" })
-				.Permission(PositionsPermissions.ManagerPositions));
-
 			builder.Add(T("Levels"), "2", b => b
 				.Action("Index", "Levels", new { area = "" })
 				.Permission(LevelsPermissions.ManagerLevels));
@@ -56,14 +57,23 @@ namespace CMSSolutions.Websites.Menus
 				.Action("Index", "MailTemplates", new { area = "" })
 				.Permission(MailTemplatesPermissions.ManagerMailTemplates));
 		}
-
 		private void BuildRecruitment(NavigationItemBuilder builder)
 		{
 			builder.IconCssClass("fa-building");
 
-			builder.Add(T("Candidate List"), "0", b => b
+			builder.Add(T("Recruitment Notice"), "0", b => b
+				.Action("Index", "Positions", new { area = "" })
+				.Permission(PositionsPermissions.ManagerPositions));
+
+
+			builder.Add(T("Candidate List"), "1", b => b
 				.Action("Index", "Candidates", new { area = "" })
 				.Permission(CandidatesPermissions.ManagerCandidates));
+		}
+
+		private void BuildInterview(NavigationItemBuilder builder)
+		{
+			builder.IconCssClass("fa-desktop");
 
 			builder.Add(T("Interview List"), "1", b => b
 				.Action("Index", "Interview", new { area = "" })
@@ -74,17 +84,13 @@ namespace CMSSolutions.Websites.Menus
 				.Permission(QuestionsPermissions.ManagerQuestions));
 		}
 
-		private void BuildReport(NavigationItemBuilder builder)
+		private void BuildEmployee(NavigationItemBuilder builder)
 		{
-			builder.IconCssClass("fa-bar-chart-o");
+			builder.IconCssClass("fa-group");
 
-			builder.Add(T("Interview Result"), "0", b => b
-				.Action("Index", "Candidates", new { area = "" })
-				.Permission(CandidatesPermissions.ManagerCandidates));
-
-			builder.Add(T("Summary Report"), "0", b => b
-				.Action("Index", "Report", new { area = "" })
-				.Permission(AdminPermissions.ManagerReports));
+			builder.Add(T("Employee List"), "2", b => b
+				.Action("Index", "EmployeeController", new { area = "" })
+				.Permission(AdminPermissions.ManagerEmployees));
 		}
     }
 }

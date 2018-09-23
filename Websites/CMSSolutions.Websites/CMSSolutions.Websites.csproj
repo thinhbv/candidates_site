@@ -252,6 +252,7 @@
   <ItemGroup>
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\CandidatesController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\InterviewController.cs" />
@@ -1857,6 +1858,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

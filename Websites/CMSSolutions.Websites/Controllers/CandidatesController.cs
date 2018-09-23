@@ -216,6 +216,48 @@
 				result2.AddCustomVar(Extensions.Constants.CandidateId, id);
 				result2.AddReloadEvent("DELETE_ENTITY_COMPLETE");
 
+				var result3 = new ControlGridFormResult<Interview>();
+				result3.Title = this.T("Interview Histories");
+				result3.CssClass = "table table-bordered table-striped";
+				result3.UpdateActionName = "Update";
+				result3.IsAjaxSupported = true;
+				result3.DefaultPageSize = WorkContext.DefaultPageSize;
+				result3.EnablePaginate = true;
+				//result3.FetchAjaxSource = this.GetModule_LevelCandidates;
+				result3.GridWrapperStartHtml = CMSSolutions.Constants.Grid.GridWrapperStartHtml;
+				result3.GridWrapperEndHtml = CMSSolutions.Constants.Grid.GridWrapperEndHtml;
+				result3.ClientId = "tblInterviewHistories";
+				result3.ActionsColumnWidth = 130;
+
+				//result3.AddColumn(x => x.created_date, T("Start Date"));
+				//result3.AddColumn(x => x.level_name, T("Level"));
+				//result3.AddColumn(x => x.month, T("Experience(month)"));
+				//result3.AddColumn(x => x.is_main)
+				//	.HasHeaderText(T("Main Skill"))
+				//	.AlignCenter()
+				//	.HasWidth(100)
+				//	.RenderAsStatusImage();
+
+				result3.AddAction().HasText(this.T("Create"))
+					.HasUrl(this.Url.Action("Edit", "LevelCandidates", new { id = 0, candidateId = id }))
+					.HasButtonStyle(ButtonStyle.Primary).HasBoxButton(false)
+					.HasCssClass(CMSSolutions.Constants.RowLeft).HasRow(true).ShowModalDialog(600, 600);
+
+				result3.AddRowAction().HasText(this.T("Edit"))
+					.HasUrl(x => Url.Action("Edit", "LevelCandidates", new { id = x.Id, candidateId = id }))
+					.HasButtonStyle(ButtonStyle.Default).HasButtonSize(ButtonSize.ExtraSmall).ShowModalDialog(600, 600);
+
+				result3.AddRowAction(true)
+					.HasText(T("Delete"))
+					.HasName("DeleteLevel")
+					.HasValue(x => x.Id)
+					.HasButtonStyle(ButtonStyle.Danger)
+					.HasButtonSize(ButtonSize.ExtraSmall)
+					.HasConfirmMessage(T(CMSSolutions.Constants.Messages.ConfirmDeleteRecord).Text);
+
+				result3.AddCustomVar(Extensions.Constants.CandidateId, id);
+				result3.AddReloadEvent("DELETE_ENTITY_COMPLETE");
+
 				return new ControlFormsResult(result, result2);
 			}
 

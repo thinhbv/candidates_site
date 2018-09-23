@@ -20,6 +20,13 @@ namespace CMSSolutions.Websites.Permissions
 			Description = "Manager Reports",
 		};
 
+		public static readonly Permission ManagerEmployees = new Permission
+		{
+			Name = "ManagerEmployees",
+			Category = "Management",
+			Description = "Manager Employees",
+		};
+
         public IEnumerable<Permission> GetPermissions()
         {
             yield return ManagerAdmin;

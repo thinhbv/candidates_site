@@ -10,8 +10,8 @@ namespace CMSSolutions.Websites.Permissions
         public static readonly Permission ManagerPositions = new Permission
         {
             Name = "ManagerPositions", 
-            Category = "Management", 
-            Description = "Manager Positions", 
+            Category = "Management",
+			Description = "Manager Recruitment Notice", 
         };
 
         

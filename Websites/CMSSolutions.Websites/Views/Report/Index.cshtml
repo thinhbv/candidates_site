@@ -1,421 +1,350 @@
-﻿<!-- widget grid -->
-<section id="widget-grid" class="">
+﻿<!-- Widget ID (each widget will need unique ID)-->
+<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0" data-widget-editbutton="false">
+	<!-- widget options:
+	usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-	<!-- row -->
-	<div class="row">
-		<article class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-			<div class="jarviswidget"
-				 data-widget-colorbutton="false"
-				 data-widget-editbutton="false"
-				 data-widget-togglebutton="false"
-				 data-widget-deletebutton="false"
-				 data-widget-fullscreenbutton="false"
-				 data-widget-custombutton="false"
-				 data-widget-collapsed="false"
-				 data-widget-sortable="false">
+	data-widget-colorbutton="false"
+	data-widget-editbutton="false"
+	data-widget-togglebutton="false"
+	data-widget-deletebutton="false"
+	data-widget-fullscreenbutton="false"
+	data-widget-custombutton="false"
+	data-widget-collapsed="true"
+	data-widget-sortable="false"
 
-				<header>
-					<h3 style="margin: 0; padding: 0 0 0 10px;">CV by Month</h3>
-				</header>
-				<div>
-					<div class="widget-body">
-						<canvas id="barChart" height="120"></canvas>
-					</div>
+	-->
+	<header>
+		<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+		<h2>Language Statistic</h2>
 
-				</div>
+	</header>
+
+	<!-- widget div-->
+	<div>
+
+		<!-- widget edit box -->
+		<div class="jarviswidget-editbox">
+			<!-- This area used as dropdown edit box -->
+
+		</div>
+		<!-- end widget edit box -->
+		<!-- widget content -->
+		<div class="widget-body">
+
+			<div class="table-responsive">
+
+				<table class="table table-bordered" style="text-align:center;">
+					<thead>
+						<tr>
+							<th style="width:10%;text-align:center;">Monthly</th>
+							<th style="width:10%;text-align:center;">Java</th>
+							<th style="width:10%;text-align:center;">PHP</th>
+							<th style="width:10%;text-align:center;">Ruby</th>
+							<th style="width:10%;text-align:center;">Python</th>
+							<th style="width:10%;text-align:center;">.Net</th>
+							<th style="width:10%;text-align:center;">Sharepoint</th>
+							<th style="width:10%;text-align:center;">Android</th>
+							<th style="width:10%;text-align:center;">Ios</th>
+							<th style="width:10%;text-align:center;">Magento</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>12</td>
+							<td>4</td>
+							<td>5</td>
+							<td>9</td>
+							<td>1</td>
+							<td>1</td>
+							<td>3</td>
+							<td>8</td>
+							<td>6</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>2</td>
+							<td>4</td>
+							<td>6</td>
+							<td>4</td>
+							<td>6</td>
+							<td>2</td>
+							<td>10</td>
+							<td>2</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>4</td>
+							<td>6</td>
+							<td>7</td>
+							<td>9</td>
+							<td>7</td>
+							<td>2</td>
+							<td>4</td>
+							<td>1</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>5</td>
+							<td>4</td>
+							<td>7</td>
+							<td>4</td>
+							<td>2</td>
+							<td>8</td>
+							<td>7</td>
+							<td>9</td>
+							<td>6</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>6</td>
+							<td>7</td>
+							<td>3</td>
+							<td>8</td>
+							<td>3</td>
+							<td>7</td>
+							<td>2</td>
+							<td>2</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>4</td>
+							<td>6</td>
+							<td>9</td>
+							<td>0</td>
+							<td>12</td>
+							<td>13</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td>6</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>6</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>8</td>
+							<td>0</td>
+							<td>0</td>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>3</td>
+							<td>4</td>
+							<td>2</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td>9</td>
+							<td>2</td>
+							<td>4</td>
+							<td>6</td>
+							<td>4</td>
+							<td>7</td>
+							<td>3</td>
+							<td>7</td>
+							<td>5</td>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>10</td>
+							<td>1</td>
+							<td>2</td>
+							<td>4</td>
+							<td>2</td>
+							<td>4</td>
+							<td>5</td>
+							<td>4</td>
+							<td>4</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<td>11</td>
+							<td>4</td>
+							<td>5</td>
+							<td>3</td>
+							<td>2</td>
+							<td>5</td>
+							<td>3</td>
+							<td>7</td>
+							<td>3</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>12</td>
+							<td>6</td>
+							<td>3</td>
+							<td>6</td>
+							<td>3</td>
+							<td>2</td>
+							<td>4</td>
+							<td>3</td>
+							<td>2</td>
+							<td>5</td>
+						</tr>
+					</tbody>
+				</table>
+
 			</div>
-		</article>
+		</div>
+		<!-- end widget content -->
 
-		<article class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-			<div class="jarviswidget"
-				 data-widget-colorbutton="false"
-				 data-widget-editbutton="false"
-				 data-widget-togglebutton="false"
-				 data-widget-deletebutton="false"
-				 data-widget-fullscreenbutton="false"
-				 data-widget-custombutton="false"
-				 data-widget-collapsed="false"
-				 data-widget-sortable="false">
-
-				<header>
-					<h3 style="margin: 0; padding: 0 0 0 10px;">Languages</h3>
-				</header>
-				<div>
-					<div class="widget-body">
-						<canvas id="doughnutChart" height="120"></canvas>
-					</div>
-
-				</div>
-			</div>
-		</article>
-
-		<article class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-			<div class="jarviswidget"
-				 data-widget-colorbutton="false"
-				 data-widget-editbutton="false"
-				 data-widget-togglebutton="false"
-				 data-widget-deletebutton="false"
-				 data-widget-fullscreenbutton="false"
-				 data-widget-custombutton="false"
-				 data-widget-collapsed="false"
-				 data-widget-sortable="false">
-
-				<header>
-					<h3 style="margin: 0; padding: 0 0 0 10px;">CV Status</h3>
-				</header>
-				<div>
-					<div class="widget-body">
-						<canvas id="pieChart" height="120"></canvas>
-					</div>
-				</div>
-			</div>
-		</article>
-
-		<article class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-			<div class="jarviswidget"
-				 data-widget-colorbutton="false"
-				 data-widget-editbutton="false"
-				 data-widget-togglebutton="false"
-				 data-widget-deletebutton="false"
-				 data-widget-fullscreenbutton="false"
-				 data-widget-custombutton="false"
-				 data-widget-collapsed="false"
-				 data-widget-sortable="false">
-
-				<header>
-					<h3 style="margin: 0; padding: 0 0 0 10px;">Position</h3>
-				</header>
-				<div>
-					<div class="widget-body">
-						<canvas id="polarChart" height="120"></canvas>
-					</div>
-				</div>
-			</div>
-		</article>
 	</div>
+	<!-- end widget div -->
 
-	<!-- end row -->
+</div>
+<!-- end widget -->
 
-</section>
-<!-- end widget grid -->
+<!-- Widget ID (each widget will need unique ID)-->
+<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false">
+	<!-- widget options:
+	usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
+	data-widget-colorbutton="false"
+	data-widget-editbutton="false"
+	data-widget-togglebutton="false"
+	data-widget-deletebutton="false"
+	data-widget-fullscreenbutton="false"
+	data-widget-custombutton="false"
+	data-widget-collapsed="true"
+	data-widget-sortable="false"
 
-<script type="text/javascript">
+	-->
+	<header>
+		<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+		<h2>Position Statistic</h2>
 
-	$(document).ready(function () {
+	</header>
 
-		pageSetUp();
+	<!-- widget div-->
+	<div>
 
-		var randomScalingFactor = function () {
-			return Math.round(Math.random() * 100);
-			//return 0;
-		};
-		var randomColorFactor = function () {
-			return Math.round(Math.random() * 255);
-		};
-		var randomColor = function (opacity) {
-			return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
-		};
+		<!-- widget edit box -->
+		<div class="jarviswidget-editbox">
+			<!-- This area used as dropdown edit box -->
 
-		var LineConfig = {
-			type: 'line',
-			data: {
-				labels: ["January", "February", "March", "April", "May", "June", "July"],
-				datasets: [{
-					label: "My First dataset",
-					data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
+		</div>
+		<!-- end widget edit box -->
+		<!-- widget content -->
+		<div class="widget-body">
 
-				}, {
-					label: "My Second dataset",
-					data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
-				}]
-			},
-			options: {
-				responsive: true,
-				tooltips: {
-					mode: 'label'
-				},
-				hover: {
-					mode: 'dataset'
-				},
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							show: true,
-							labelString: 'Month'
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							show: true,
-							labelString: 'Value'
-						},
-						ticks: {
-							suggestedMin: 0,
-							suggestedMax: 100,
-						}
-					}]
-				}
-			}
-		};
+			<div class="table-responsive">
 
-		$.each(LineConfig.data.datasets, function (i, dataset) {
-			dataset.borderColor = 'rgba(0,0,0,0.15)';
-			dataset.backgroundColor = randomColor(0.5);
-			dataset.pointBorderColor = 'rgba(0,0,0,0.15)';
-			dataset.pointBackgroundColor = randomColor(0.5);
-			dataset.pointBorderWidth = 1;
-		});
+				<table class="table table-bordered" style="text-align:center;">
+					<thead>
+						<tr>
+							<th style="width:12%;text-align:center;">Monthly</th>
+							<th style="width:22%;text-align:center;">Brse</th>
+							<th style="width:22%;text-align:center;">PM</th>
+							<th style="width:22%;text-align:center;">Dev</th>
+							<th style="width:22%;text-align:center;">QA</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>12</td>
+							<td>4</td>
+							<td>5</td>
+							<td>9</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>2</td>
+							<td>4</td>
+							<td>6</td>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>4</td>
+							<td>6</td>
+							<td>7</td>
+							<td>9</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>5</td>
+							<td>4</td>
+							<td>7</td>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>6</td>
+							<td>7</td>
+							<td>3</td>
+							<td>8</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>4</td>
+							<td>6</td>
+							<td>9</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td>6</td>
+						</tr>
+						<tr>
+							<td>8</td>
+							<td>0</td>
+							<td>0</td>
+							<td>1</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td>9</td>
+							<td>2</td>
+							<td>4</td>
+							<td>6</td>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>10</td>
+							<td>1</td>
+							<td>2</td>
+							<td>4</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td>11</td>
+							<td>4</td>
+							<td>5</td>
+							<td>3</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td>12</td>
+							<td>6</td>
+							<td>3</td>
+							<td>6</td>
+							<td>3</td>
+						</tr>
+					</tbody>
+				</table>
 
-		// bar chart example
+			</div>
+		</div>
+		<!-- end widget content -->
 
-		var barChartData = {
-			labels: ["January", "February", "March", "April", "May", "June", "July", "August"],
-			datasets: [{
-				label: 'Pass',
-				backgroundColor: "rgba(70,191,189,0.5)",
-				data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-			}, {
-				label: 'Fail',
-				backgroundColor: "rgba(255,31,34,0.5)",
-				data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-			}],
+	</div>
+	<!-- end widget div -->
 
-		};
-
-		// radar example
-
-		var RadarConfig = {
-			type: 'radar',
-			data: {
-				labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-				datasets: [{
-					label: "My First dataset",
-					backgroundColor: "rgba(220,220,220,0.2)",
-					pointBackgroundColor: "rgba(220,220,220,1)",
-					data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-				}, {
-					label: "My Second dataset",
-					backgroundColor: "rgba(151,187,205,0.2)",
-					pointBackgroundColor: "rgba(151,187,205,1)",
-					hoverPointBackgroundColor: "#fff",
-					pointHighlightStroke: "rgba(151,187,205,1)",
-					data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-				}, ]
-			},
-			options: {
-				title: {
-					display: true,
-					text: ''
-				},
-				legend: {
-					position: 'top',
-				},
-
-				scale: {
-					reverse: false,
-					ticks: {
-						beginAtZero: true
-					}
-				}
-			}
-		};
-
-		// doughnut example
-
-		var DoughtnutConfig = {
-			type: 'doughnut',
-			data: {
-				datasets: [{
-					data: [
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor()
-					],
-					backgroundColor: [
-						"#F7464A",
-						"#46BFBD",
-						"#FDB45C",
-						"#949FB1",
-						"#4D5360",
-					],
-					label: 'Dataset 1'
-				}],
-				labels: [
-					".Net",
-					"Ruby",
-					"Python",
-					"Java",
-					"PHP"
-				]
-			},
-			options: {
-				title: {
-					display: true,
-					text: ''
-				},
-				responsive: true,
-				legend: {
-					position: 'top',
-				},
-				tooltips: {
-					callbacks: {
-						label: function (tooltipItem, data) {
-							var allData = data.datasets[tooltipItem.datasetIndex].data;
-							var tooltipLabel = data.labels[tooltipItem.index];
-							var tooltipData = allData[tooltipItem.index];
-							var total = 0;
-							for (var i in allData) {
-								total += allData[i];
-							}
-							var tooltipPercentage = Math.round((tooltipData / total) * 100);
-							return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
-						}
-					}
-				}
-			}
-		};
-
-		// polar chart example
-
-		var PolarConfig = {
-			data: {
-				datasets: [{
-					data: [
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-					],
-					backgroundColor: [
-						"#F7464A",
-						"#46BFBD",
-						"#FDB45C",
-						"#949FB1",
-						"#4D5360",
-					],
-					label: 'My dataset' // for legend
-				}],
-				labels: [
-					"Brse",
-					"PM",
-					"Dev",
-					"QA"
-				]
-			},
-			options: {
-				responsive: true,
-				legend: {
-					position: 'top',
-				},
-				title: {
-					display: true,
-					text: ''
-				},
-				scale: {
-					ticks: {
-						beginAtZero: true
-					},
-					reverse: false
-				},
-				animateRotate: false,
-				tooltips: {
-					callbacks: {
-						label: function (tooltipItem, data) {
-							var allData = data.datasets[tooltipItem.datasetIndex].data;
-							var tooltipLabel = data.labels[tooltipItem.index];
-							var tooltipData = allData[tooltipItem.index];
-							var total = 0;
-							for (var i in allData) {
-								total += allData[i];
-							}
-							var tooltipPercentage = Math.round((tooltipData / total) * 100);
-							return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
-						}
-					}
-				}
-			}
-		};
-
-		// pie chart example
-		var PieConfig = {
-			type: 'pie',
-			data: {
-				datasets: [{
-					data: [
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-					],
-					backgroundColor: [
-						"#F7464A",
-						"#46BFBD",
-						"#FDB45C",
-						"#949FB1",
-					],
-				}],
-				labels: [
-					"New",
-					"Rviewing",
-					"Pass",
-					"Fail"
-				]
-			},
-			options: {
-				showAllTooltips: true,
-				plugins: {
-					labels: {
-						value: 'percentage',
-						position: 'outside'
-					}
-				},
-				title: {
-					display: true,
-					text: ''
-				},
-				responsive: true,
-				tooltips: {
-					enabled: true,
-					position: 'average',
-					callbacks: {
-						label: function (tooltipItem, data) {
-							var allData = data.datasets[tooltipItem.datasetIndex].data;
-							var tooltipLabel = data.labels[tooltipItem.index];
-							var tooltipData = allData[tooltipItem.index];
-							var total = 0;
-							for (var i in allData) {
-								total += allData[i];
-							}
-							var tooltipPercentage = Math.round((tooltipData / total) * 100);
-							return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
-						}
-					}
-				}
-			}
-		};
-
-		window.onload = function () {
-			window.myBar = new Chart(document.getElementById("barChart"), {
-				type: 'bar',
-				data: barChartData,
-				options: {
-					responsive: true,
-					title: {
-						display: true,
-						text: 'CV by Month'
-					}
-				}
-			});
-			window.myDoughnut = new Chart(document.getElementById("doughnutChart"), DoughtnutConfig);
-			window.myPie = new Chart(document.getElementById("pieChart"), PieConfig);
-			window.myPolarArea = Chart.PolarArea(document.getElementById("polarChart"), PolarConfig);
-		};
-
-	})
-
-</script>
+</div>
+<!-- end widget -->

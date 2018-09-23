@@ -78,15 +78,15 @@ namespace CMSSolutions.Websites.Menus
 				.Action("Index", "ScheduleInterview", new { area = "" })
 				.Permission(ScheduleInterviewPermissions.ManagerScheduleInterview));
 
-			builder.Add(T("Interview Requests"), "3", b => b
+			builder.Add(T("Interview Request List"), "3", b => b
 				.Action("Index", "Interview", new { area = "" })
 				.Permission(InterviewPermissions.ManagerInterview));
 
-			builder.Add(T("Interview Questions"), "4", b => b
+			builder.Add(T("Candidate Questions"), "4", b => b
 				.Action("Index", "Questions", new { area = "" })
 				.Permission(QuestionsPermissions.ManagerQuestions));
 
-			builder.Add(T("Interview Reports"), "5", b => b
+			builder.Add(T("Interviewer Questions"), "5", b => b
 				.Action("Index", "Report", new { area = "" })
 				.Permission(AdminPermissions.ManagerReports));
 		}

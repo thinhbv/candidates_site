@@ -26,12 +26,12 @@ namespace CMSSolutions.Websites.Controllers
 
 		}
 
-		[Url("admin/reports")]
+		[Url("admin/interviewer-questions")]
 		public ActionResult Index()
 		{
-			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Reports"), Url = "#" });
+			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Interviewer Questions"), Url = "#" });
 
-			ViewBag.Title = T("Reports");
+			ViewBag.Title = T("Interviewer Questions");
 
 			return View();
 		}

@@ -38,11 +38,11 @@
         [Url("admin/candidates")]
         public ActionResult Index()
         {
-            WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Candidates"), Url = "#" });
+			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Recruitment Management"), Url = "#" });
             var result = new ControlGridFormResult<Candidates>();
             var siteSettings = WorkContext.Resolve<SiteSettings>();
 
-			result.Title = this.T("Candidate List");
+			result.Title = this.T("Candidate Management");
             result.CssClass = "table table-bordered table-striped";
             result.UpdateActionName = "Update";
             result.IsAjaxSupported = true;
@@ -153,7 +153,7 @@
 				 model = this.service.GetById(id);
 			}
 
-			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Candidates"), Url = Url.Action("Index") });
+			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Recruitment Management"), Url = Url.Action("Index") });
 			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = text, Url = "#" });
 
             var result = new ControlFormResult<CandidatesModel>(model);

@@ -34,7 +34,7 @@
 		[Url("admin/recruitments")]
         public ActionResult Index()
         {
-			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Recruitments"), Url = "#" });
+			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Recruitment Management"), Url = "#" });
             var result = new ControlGridFormResult<Positions>();
             var siteSettings = WorkContext.Resolve<SiteSettings>();
 
@@ -81,7 +81,7 @@
 				 model = this.service.GetById(id);
             }
 			title = T("Edit Recruitment Information");
-			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Recruitments"), Url = Url.Action("Index") });
+			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = T("Recruitment Management"), Url = Url.Action("Index") });
 			WorkContext.Breadcrumbs.Add(new Breadcrumb { Text = title, Url = "#" });
 
 			var result = new ControlFormResult<PositionsModel>(model)
